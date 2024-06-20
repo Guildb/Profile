@@ -33,6 +33,7 @@ const Skills = () => {
         <li>PostgresSQL</li>
         <li>MySQL</li>
         <li>SQLite</li>
+        <li>MongoDB</li>
       </ul>
     </div>
   );

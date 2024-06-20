@@ -4,45 +4,45 @@ import ContactInfo from "./ContactInfo";
 import Interests from "./Interests";
 import Skills from "./Skills";
 import Projects from "./Projects";
-import EducationExperience from "./EducationExperience";
+import Experience from "./Experience";
 import { useTheme } from "../contexts/ThemeContext";
 
 const Profile = () => {
   const { darkMode } = useTheme();
   return (
-    <div className={`${darkMode ? 'bg-slate-800' : 'bg-slate-100'}`}
-    style={{
-      backgroundImage: `url(${darkMode ? "/dark-pattern.svg" : "/light-pattern.svg"})`,
-    }}
+    <div
+      className={`${darkMode ? "bg-slate-800" : "bg-slate-100"}`}
+      style={{
+        backgroundImage: `url(${
+          darkMode ? "/dark-pattern.svg" : "/light-pattern.svg"
+        })`,
+      }}
     >
-      <div className={`container mx-auto ${darkMode ? 'bg-slate-800 text-white' : 'bg-slate-100 text-black'}`}>
+      <div
+        className={`container mx-auto ${
+          darkMode ? "bg-slate-800 text-white" : "bg-slate-100 text-black"
+        }`}
+      >
         <div id="about">
-          <About/>
+          <About />
         </div>
-        
-        
         <div id="skills">
-          <Skills/>
+          <Skills />
         </div>
         <div id="projects">
-          <Projects
-            projects={[{ name: "Project 1", description: "Description 1" }]}
-          />
+          <Projects />
         </div>
         <div id="experience">
-          <EducationExperience
-            education={[{ degree: "Degree", institution: "Institution" }]}
-            experience={[{ jobTitle: "Job Title", company: "Company" }]}
-          />
+          <Experience />
           <div id="interests">
-          <Interests items={["Coding", "Music", "Gaming"]} />
-        </div>
-        <div id="contact-info">
-          <ContactInfo email="your-email@example.com" phone="123-456-7890" />
-        </div>
+            <Interests />
+          </div>
+          <div id="contact-info">
+            <ContactInfo />
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

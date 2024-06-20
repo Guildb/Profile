@@ -32,6 +32,9 @@ const LandingPage = () => {
           collaborations, don’t hesitate to reach out. I’d love to hear from
           you!
         </p>
+        <li>Linkdn</li>
+        <li>GitHub</li>
+        <li>CV</li>
       </div>
     </div>
   );
