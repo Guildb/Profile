@@ -21,7 +21,7 @@ const Bio = () => {
             </li>
             <li className="flex items-center my-2">
               <FaGraduationCap className="mr-2 text-blue-500" />
-              Degree: Bachelor of Science with Honours 1st
+              Degree: Bachelor of Science with Honours First-Class
             </li>
             <li className="flex items-center my-2">
               <FaPhone className="mr-2 text-blue-500" />

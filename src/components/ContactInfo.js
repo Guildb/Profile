@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useTheme } from "../contexts/ThemeContext";
+import emailjs from 'emailjs-com';
 
 const ContactInfo = () => {
+  const { darkMode } = useTheme();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,12 +21,20 @@ const ContactInfo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send the data to an API or email service)
-    console.log('Form submitted:', formData);
+
+    emailjs.send('service_bkaj0bm', 'template_j2j5l3s', formData, '9lfsIIL0iH2_xrsfG')
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Message sent successfully!');
+      })
+      .catch((err) => {
+        console.log('FAILED...', err);
+        alert('Failed to send message. Please try again later.');
+      });
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 shadow-md rounded-lg">
+    <div className={`max-w-md mx-auto p-4 shadow-md rounded-lg ${darkMode ? 'bg-slate-700' : 'bg-slate-100'}`}>
       <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
