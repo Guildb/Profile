@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { animateScroll as scroll } from 'react-scroll';
+import { useTheme } from '../contexts/ThemeContext';
+
 
 const BackToTopButton = () => {
+  const { darkMode } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
@@ -31,7 +34,7 @@ const BackToTopButton = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="p-3 w-12 h-12 bg-gray-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none"
+          className={`p-3 w-12 h-12 rounded-full shadow-lg focus:outline-none ${darkMode ? 'text-slate bg-gray-200 hover:bg-blue-200' : 'text-white bg-gray-600 hover:bg-blue-800'}`}
         >
           ↑
         </button>

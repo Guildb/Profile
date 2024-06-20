@@ -6,70 +6,58 @@ import { useTheme } from '../contexts/ThemeContext';
 const Header = () => {
   const { darkMode } = useTheme();
   return (
-    <header className={`mt-4 absolute top-0 left-1/2 transform -translate-x-1/2 py-4 bg-opacity-75  rounded-full p-6 ${darkMode ? 'text-white' : 'text-slate'}`}>
-      <nav>
-        <ul className="flex justify-center space-x-4">
-          <li>
+    <header className={`mt-4 absolute fixed top-0 left-0 w-full py-4 bg-opacity-75 ${darkMode ? 'text-white' : 'text-slate'} `}>
+      <nav className="container mx-auto flex flex-wrap justify-center items-center p-4">
+        <div className="flex flex-wrap justify-center space-x-2 md:space-x-4 shadow-md rounded-full">
             <Link
               to="about"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
-            >
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
+              >
               About
             </Link>
-          </li>
-          <li>
             <Link
               to="skills"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
             >
               Skills
             </Link>
-          </li>
-          <li>
             <Link
               to="projects"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
             >
               Projects
             </Link>
-          </li>
-          <li>
             <Link
               to="experience"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
             >
               Experience
             </Link>
-          </li>
-          <li>
             <Link
               to="interests"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
             >
               Interests
             </Link>
-          </li>
-          <li>
             <Link
               to="contact-info"
               smooth={true}
               duration={1000}
-              className="cursor-pointer"
+              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
             >
               Contact
             </Link>
-          </li>
-        </ul>
+            </div>
       </nav>
     </header>
   );
