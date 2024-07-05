@@ -27,13 +27,15 @@ const LandingPage = () => {
         }`}
       >
         <div className="items-center" style={{ width: "50vw" }}>
-          <h1 className="text-4xl mt-4">Welcome</h1>
-          <h1 className="text-4xl mt-4">I'm Renato Cardoso</h1>
+          <b><h1 className="text-4xl mt-4">Welcome</h1>
+          <h1 className="text-4xl mt-4">I'm Renato Cardoso</h1></b>
           <p className="text-lg mt-2 text-center">
+            <b>
             Take a look around my page to see what I’ve been working on and
             learn a bit more about me. If you want to connect or chat about
             potential collaborations, don’t hesitate to reach out. I’d love to
             hear from you!
+            </b>
           </p>
           <ul className="flex flex-col items-center mt-4 space-y-4">
             <li className="flex items-center">
