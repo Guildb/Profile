@@ -6,7 +6,7 @@ const Footer = () => {
   const { darkMode } = useTheme();
 
   return (
-    <footer className={`py-8 px-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+    <footer className={`py-8 px-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}>
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h2 className="text-2xl font-bold mb-2">Renato Cardoso</h2>

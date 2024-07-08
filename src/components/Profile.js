@@ -19,7 +19,7 @@ const Profile = () => {
       }}
     >
       <div
-        className={`container mx-auto ${
+        className={`container mx-auto shadow-lg ${
           darkMode ? "bg-slate-800 text-white" : "bg-slate-100 text-black"
         }`}
       >
