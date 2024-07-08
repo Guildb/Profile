@@ -14,7 +14,7 @@ const Profile = () => {
       className={`${darkMode ? "bg-slate-800" : "bg-slate-100"}`}
       style={{
         backgroundImage: `url(${
-          darkMode ? "/dark-pattern.svg" : "/light-pattern.svg"
+          darkMode ? "dark-pattern.svg" : "light-pattern.svg"
         })`,
       }}
     >

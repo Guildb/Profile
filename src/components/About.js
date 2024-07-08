@@ -11,7 +11,7 @@ const Bio = () => {
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center my-8 w-full">
         <div className="flex justify-center w-full md:w-1/2 md:mr-8 mb-4 md:mb-0" data-aos="zoom-in-left" data-aos-easing="ease-in-sine">
-          <ProfilePicture src="profile.png" />
+          <ProfilePicture />
         </div>
         <div className="w-full md:w-1/2 flex justify-center md:justify-start" data-aos="zoom-in-right" data-aos-easing="ease-in-sine">
           <ul className="list-none text-left">
