@@ -47,7 +47,7 @@ const ContactInfo = () => {
         setShowNotification(true);
         setTimeout(() => {
           window.location.reload();
-        }, 2000); // Refresh the page after 2 seconds
+        }, 3000);
       })
       .catch((err) => {
         console.log("FAILED...", err);
@@ -56,6 +56,9 @@ const ContactInfo = () => {
           "Failed to send message. Please try again later."
         );
         setShowNotification(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       });
   };
 
