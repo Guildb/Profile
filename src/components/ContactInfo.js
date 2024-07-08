@@ -8,6 +8,7 @@ const ContactInfo = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: null,
     message: "",
   });
 
@@ -29,6 +30,7 @@ const ContactInfo = () => {
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
+      from_phone: formData.phone,
       to_name: "Renato",
       message: formData.message,
     };
@@ -142,6 +144,19 @@ const ContactInfo = () => {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
             required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-bold mb-2" htmlFor="phone">
+            Phone Number (Opcional)
+          </label>
+          <input
+            type="number"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           />
         </div>
         <div className="mb-4">
