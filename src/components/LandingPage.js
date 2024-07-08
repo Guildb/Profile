@@ -14,7 +14,7 @@ const LandingPage = () => {
       }`}
       style={{
         backgroundImage: `url(${
-          darkMode ? "https://guildb.github.io/Profile/dark-background.jpg" : "/light-background.jpg"
+          darkMode ? "dark-background.jpg" : "light-background.jpg"
         })`,
       }}
     >
