@@ -23,7 +23,7 @@ const EducationExperience = () => {
       title: "Front-End/Vue.js",
       location: "Southampton, UK",
       description:
-        "In association with DataMango, collaboratively executed and delivered a carbon footprint measuring project until completion, within 3 months. I was responsible to develop and integrate with the backend the whole front-end using Vue.js with the help of Tailwind for styling and vue-chartjs for data visualization.",
+        "In collaboration with DataMango, we executed and delivered a carbon footprint measuring project. I was responsible for the development of the front end and integration of with the backend using Vue.js, Tailwind for styling and vue-chartjs for data visualization.",
       date: "2024",
       icon: FaLaptopCode,
     },
@@ -31,7 +31,7 @@ const EducationExperience = () => {
       title: "DevOps/React",
       location: "Southampton, UK",
       description:
-        "Worked as a developer within a small team to design and deliver an interactive, full-stack web application for managing points of interests, and a mobile application. My role was to create and integrate the whole React front-end and the visualization of a map with POI's using OpenStreetMap.",
+        "Worked within a small team in charge of designing and velivering a full-stack web and mobile application for managing points of interests. My role was to develop and integrate the React front-end and create the visualization of a map with POI's using OpenStreetMap.",
       date: "2023",
       icon: FaServer,
     },

@@ -32,11 +32,10 @@ const Projects = () => {
             Matching Project Allocation System
           </h3>
           <p className="mb-4">
-            This was my final year project, where I developed a landing project
-            allocation application to automate a manual process at my
-            university. Students could add their final year project and
+            This was my final year project, where I developed a application to automate a manual process at my
+            university. The web application allowed students add their idea for the final year project and
             automatically be assigned a tutor, and the tutor could suggest
-            projects for students if they had no idea.
+            projects for students.
           </p>
           <div className="flex flex-wrap justify-center">
           <div className={techChipClass}>
