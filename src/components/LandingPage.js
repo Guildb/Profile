@@ -26,7 +26,7 @@ const LandingPage = () => {
             : "bg-white bg-opacity-40 text-slate"
         }`}
       >
-        <div className="items-center" style={{ width: "50vw" }}>
+        <div className="items-center" style={{ width: "50vw", height:"screen" }}>
           <b><h1 className="text-4xl mt-4">Welcome</h1>
           <h1 className="text-4xl mt-4">I'm Renato Cardoso</h1></b>
           <p className="text-lg mt-2 text-center">

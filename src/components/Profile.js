@@ -23,23 +23,23 @@ const Profile = () => {
           darkMode ? "bg-slate-800 text-white" : "bg-slate-100 text-black"
         }`}
       >
-        <div id="about" >
+        <div id="about">
           <About />
         </div>
-        <div id="skills" >
+        <div id="skills">
           <Skills />
         </div>
-        <div id="projects" >
+        <div id="projects">
           <Projects />
         </div>
-        <div id="experience" >
+        <div id="experience">
           <Experience />
-          <div id="interests" >
-            <Interests />
-          </div>
-          <div id="contact-info" >
-            <ContactInfo />
-          </div>
+        </div>
+        <div id="interests">
+          <Interests />
+        </div>
+        <div id="contact-info">
+          <ContactInfo />
         </div>
       </div>
     </div>
