@@ -24,7 +24,7 @@ const Bio = () => {
         data-aos-easing="ease-in-sine"
       >
         I'm a Portuguese software engineer and I’ve just finished my degree in
-        software engineering in the UK I’m super excited to use everything I’ve
+        software engineering in the UK. I’m super excited to use everything I’ve
         learned to create robust and state of the art solutions. I’m passionate
         about coding and eager to take on new challenges and projects.
       </p>
