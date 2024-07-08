@@ -38,7 +38,7 @@ const Bio = () => {
           </ul>
         </div>
       </div>
-      <div className="text-left mx-auto max-w-4xl" data-aos="zoom-in-down" data-aos-easing="ease-in-sine">
+      <div className="text-lg mt-2 text-justify" data-aos="zoom-in-down" data-aos-easing="ease-in-sine">
         <p>
           I have vast experience with full stack development and a solid skill set in both front-end and back-end development, allowing me to build and maintain complex web applications. My academic background and practical experience have given me a comprehensive understanding of diverse frameworks and technologies. In addition, I have a strong understanding of database management systems, allowing me to rapidly design, deploy, and maintain data storage solutions. My software development knowledge extends beyond web development, since I am skilled at using a range of programming languages to produce robust software solutions. My experience with software development methodologies such as Agile and DevOps enables me to collaborate well in teams and create high-quality software products. This complete understanding of software engineering principles, combined with my hands-on experience, enables me to tackle complex issues and provide unique solutions across many domains.
         </p>

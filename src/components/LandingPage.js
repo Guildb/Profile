@@ -20,23 +20,26 @@ const LandingPage = () => {
     >
       <Header />
       <div
-        className={`flex flex-col items-center justify-center h-full ${
+        className={`flex flex-col items-center justify-center h-full text-center ${
           darkMode
             ? "bg-black bg-opacity-40 text-white"
             : "bg-white bg-opacity-40 text-slate"
         }`}
       >
-        <div className="items-center" style={{ width: "50vw", height:"screen" }}>
-          <b><h1 className="text-4xl mt-4">Welcome</h1>
-          <h1 className="text-4xl mt-4">I'm Renato Cardoso</h1></b>
+        <div className={`items-center p-4 rounded ${
+          darkMode
+            ? "bg-slate-700 bg-opacity-60"
+            : "bg-slate-300 bg-opacity-60"
+        }`}
+        style={{ width: "70vw", height:"screen" }}>
+          <b>
+          <h1 className="text-4xl mt-8text-justify ">Welcome I'm Renato Cardoso</h1>
           <p className="text-lg mt-2 text-center">
-            <b>
             Take a look around my page to see what I’ve been working on and
             learn a bit more about me. If you want to connect or chat about
             potential collaborations, don’t hesitate to reach out. I’d love to
             hear from you!
-            </b>
-          </p>
+          </p></b>
           <ul className="flex flex-col items-center mt-4 space-y-4">
             <li className="flex items-center">
               <a
