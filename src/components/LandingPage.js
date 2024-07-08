@@ -33,7 +33,8 @@ const LandingPage = () => {
         }`}
         style={{ width: "70vw", height:"screen" }}>
           <b>
-          <h1 className="text-4xl mt-8text-justify ">Welcome I'm Renato Cardoso</h1>
+          <h1 className="text-4xl mt-8text-justify ">Welcome</h1>
+          <h1 className="text-4xl mt-8text-justify ">I'm Renato Cardoso</h1>
           <p className="text-lg mt-2 text-center">
             Take a look around my page to see what I’ve been working on and
             learn a bit more about me. If you want to connect or chat about
