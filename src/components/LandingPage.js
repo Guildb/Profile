@@ -26,7 +26,7 @@ const LandingPage = () => {
             : "bg-white bg-opacity-40 text-slate"
         }`}
       >
-        <div className={`items-center p-4 rounded ${
+        <div className={`items-center p-4 mb-4 rounded absolute bottom-0 sm:relative sm:bottom-auto ${
           darkMode
             ? "bg-slate-700 bg-opacity-60"
             : "bg-slate-300 bg-opacity-60"
