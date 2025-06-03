@@ -10,7 +10,7 @@ import ProfilePicture from "./ProfilePicture";
 
 const Bio = () => {
   return (
-    <div className="text-center my-4 px-4">
+    <div className="text-center mb-4 px-4">
       <h2
         className="text-2xl font-bold"
         data-aos="zoom-in-up"
