@@ -4,28 +4,45 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { FaGraduationCap, FaLaptopCode, FaServer } from "react-icons/fa";
+import {
+  FaGraduationCap,
+  FaLaptopCode,
+  FaServer,
+  FaHeadset,
+} from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
+import SectionHeading from "./SectionHeading";
 
 const EducationExperience = () => {
   const { darkMode } = useTheme();
 
   const experiences = [
     {
+      title: "Web Support Engineer",
+      company: "ICAAL",
+      location: "Southampton, UK",
+      description:
+        "Working as part of ICAAL's web team, supporting and developing client websites — diagnosing and resolving issues, building new features and keeping sites fast, secure and up to date.",
+      date: "Nov 2025 - Present",
+      icon: FaHeadset,
+      current: true,
+    },
+    {
+      title: "Front-End/Vue.js",
+      company: "DataMango",
+      location: "Southampton, UK",
+      description:
+        "In collaboration with DataMango, we executed and delivered a carbon footprint measuring project. I was responsible for the development of the front end and integration with the back-end using Vue.js, Tailwind for styling and vue-chartjs for data visualization.",
+      date: "2024",
+      icon: FaLaptopCode,
+    },
+    {
       title: "Undergraduate Degree",
       location: "Southampton, UK",
       description:
         "Graduated with honours first-class degree in (BCS) Software Engineering",
-      date: "2021-2024",
+      date: "2021 - 2024",
       icon: FaGraduationCap,
-    },
-    {
-      title: "Front-End/Vue.js",
-      location: "Southampton, UK",
-      description:
-        "In collaboration with DataMango, we executed and delivered a carbon footprint measuring project. I was responsible for the development of the front end and integration of with the back-end using Vue.js, Tailwind for styling and vue-chartjs for data visualization.",
-      date: "2024",
-      icon: FaLaptopCode,
     },
     {
       title: "DevOps/React",
@@ -38,33 +55,55 @@ const EducationExperience = () => {
   ];
 
   return (
-    <div
-      className=" my-8 px-4"
-    >
-      <h2 className="text-3xl font-bold mb-8">Experience</h2>
+    <div className="py-12 px-4">
+      <SectionHeading eyebrow="My journey" title="Experience" />
       <VerticalTimeline>
         {experiences.map((experience, index) => (
           <VerticalTimelineElement
             key={index}
             contentStyle={{
-              background: darkMode ? "#334155" : "#fff",
-              color: darkMode ? "#fff" : "#374151",
+              background: darkMode ? "rgba(30, 41, 59, 0.9)" : "#ffffff",
+              color: darkMode ? "#f1f5f9" : "#334155",
+              borderRadius: "1rem",
+              borderTop: `4px solid ${experience.current ? "#22d3ee" : "#3b82f6"}`,
+              boxShadow: "0 10px 30px rgba(2, 6, 23, 0.15)",
             }}
             contentArrowStyle={{
-              borderRight: `7px solid ${darkMode ? "#fff" : "#374151"}`,
+              borderRight: `7px solid ${
+                darkMode ? "rgba(30, 41, 59, 0.9)" : "#ffffff"
+              }`,
             }}
             date={experience.date}
+            dateClassName={`font-semibold ${
+              darkMode ? "lg:text-slate-300" : "lg:text-slate-600"
+            }`}
             iconStyle={{
-              background: darkMode ? "#334155" : "#374151",
+              background: experience.current
+                ? "linear-gradient(135deg, #2563eb, #06b6d4)"
+                : darkMode
+                ? "#334155"
+                : "#374151",
               color: "#fff",
+              boxShadow: `0 0 0 4px ${
+                darkMode ? "#0f172a" : "#ffffff"
+              }, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)`,
             }}
             icon={<experience.icon />}
           >
-            <h3 className="vertical-timeline-element-title text-xl font-bold">
-              {experience.title}
-            </h3>
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="vertical-timeline-element-title text-xl font-bold">
+                {experience.title}
+              </h3>
+              {experience.current && (
+                <span className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-0.5 text-xs font-semibold text-white">
+                  Present
+                </span>
+              )}
+            </div>
             <h4 className="vertical-timeline-element-subtitle text-md font-semibold text-gray-400">
-              {experience.location}
+              {experience.company
+                ? `${experience.company} · ${experience.location}`
+                : experience.location}
             </h4>
             <p>{experience.description}</p>
           </VerticalTimelineElement>

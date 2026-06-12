@@ -2,9 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-body.dark {
-    background-color: #1a202c;
-    color: #a0aec0;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+body.dark {
+  background-color: #1a202c;
+  color: #a0aec0;
+}
+
+::selection {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 bg-clip-text text-transparent;
+  }
+}
+
+/* Accent gradient for the experience timeline line */
+.vertical-timeline::before {
+  background: linear-gradient(180deg, #3b82f6, #22d3ee) !important;
+  width: 4px;
+  border-radius: 9999px;
+}

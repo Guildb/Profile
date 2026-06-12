@@ -12,7 +12,10 @@ import { ThemeProvider } from './contexts/ThemeContext';
 const App = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Duration of the animation in milliseconds
+      duration: 800, // Duration of the animation in milliseconds
+      easing: 'ease-out-cubic',
+      once: true, // Only animate elements the first time they scroll into view
+      offset: 60,
     });
   }, []);
 

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { animateScroll as scroll } from 'react-scroll';
-import { useTheme } from '../contexts/ThemeContext';
-
+import { FaArrowUp } from 'react-icons/fa';
 
 const BackToTopButton = () => {
-  const { darkMode } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
@@ -30,13 +28,14 @@ const BackToTopButton = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="fixed bottom-6 right-6 z-50">
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className={`p-3 w-12 h-12 rounded-full shadow-lg focus:outline-none ${darkMode ? 'text-slate bg-gray-200 hover:bg-blue-200' : 'text-white bg-gray-600 hover:bg-blue-800'}`}
+          aria-label="Back to top"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none"
         >
-          ↑
+          <FaArrowUp />
         </button>
       )}
     </div>

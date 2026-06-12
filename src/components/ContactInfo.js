@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import emailjs from "emailjs-com";
+import SectionHeading from "./SectionHeading";
 
 const ContactInfo = () => {
   const { darkMode } = useTheme();
+
+  const inputClass = `w-full rounded-xl border px-4 py-3 text-sm outline-none transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 ${
+    darkMode
+      ? "border-slate-600 bg-slate-800 text-white placeholder-slate-400"
+      : "border-slate-300 bg-white text-slate-900 placeholder-slate-400"
+  }`;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -65,11 +72,16 @@ const ContactInfo = () => {
   };
 
   return (
-    <div
-      className={`max-w-md mx-auto p-4 shadow-md rounded-lg ${
-        darkMode ? "bg-slate-700" : "bg-slate-100"
-      }`}
-    >
+    <div className="py-12 px-4">
+      <SectionHeading eyebrow="Get in touch" title="Contact Me" />
+      <div
+        className={`max-w-xl mx-auto p-6 sm:p-8 shadow-lg rounded-2xl border ${
+          darkMode
+            ? "border-slate-600/40 bg-slate-700/60"
+            : "border-slate-200 bg-white"
+        }`}
+        data-aos="fade-up"
+      >
       {showNotification && (
         <div className="p-4">
           <div
@@ -116,7 +128,6 @@ const ContactInfo = () => {
           </div>
         </div>
       )}
-      <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2" htmlFor="name">
@@ -128,7 +139,7 @@ const ContactInfo = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            className={inputClass}
             required
           />
         </div>
@@ -142,21 +153,21 @@ const ContactInfo = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            className={inputClass}
             required
           />
         </div>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2" htmlFor="phone">
-            Phone Number (Opcional)
+            Phone Number (Optional)
           </label>
           <input
-            type="number"
+            type="tel"
             id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            className={inputClass}
           />
         </div>
         <div className="mb-4">
@@ -168,7 +179,7 @@ const ContactInfo = () => {
             name="message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            className={inputClass}
             rows="5"
             required
           ></textarea>
@@ -176,12 +187,13 @@ const ContactInfo = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+            className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-blue-500 hover:to-cyan-400 focus:outline-none"
           >
-            Send
+            Send Message
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };

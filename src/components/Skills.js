@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import SectionHeading from "./SectionHeading";
 import {
   FaLaptopCode,
   FaPalette,
@@ -12,136 +13,85 @@ import {
   FaReact,
   FaVuejs,
   FaNodeJs,
+  FaWind,
+  FaFlask,
+  FaTools,
 } from "react-icons/fa";
+
+const skillGroups = [
+  {
+    title: "General Skills",
+    items: [
+      { icon: FaPalette, label: "Web Design", color: "text-pink-500" },
+      { icon: FaLightbulb, label: "Design Thinking", color: "text-amber-400" },
+      { icon: FaLaptopCode, label: "Full Stack Development", color: "text-blue-500" },
+      { icon: FaTools, label: "Problem Solving", color: "text-emerald-500" },
+      { icon: FaLaptopCode, label: "Computer Literacy", color: "text-sky-500" },
+      { icon: FaLaptopCode, label: "Software Development", color: "text-indigo-400" },
+      { icon: FaServer, label: "Database Design and Management", color: "text-cyan-500" },
+    ],
+  },
+  {
+    title: "Technologies and Frameworks",
+    items: [
+      { icon: FaReact, label: "React", color: "text-cyan-400" },
+      { icon: FaVuejs, label: "Vue.js", color: "text-emerald-500" },
+      { icon: FaWind, label: "Tailwind", color: "text-sky-400" },
+      { icon: FaFlask, label: "Flask", color: "text-slate-400" },
+      { icon: FaNodeJs, label: "Node.js", color: "text-green-500" },
+      { icon: FaServer, label: "Express", color: "text-gray-400" },
+    ],
+  },
+  {
+    title: "Programming Languages",
+    items: [
+      { icon: FaPython, label: "Python", color: "text-yellow-500" },
+      { icon: FaJava, label: "Java", color: "text-red-500" },
+      { icon: FaJsSquare, label: "JavaScript", color: "text-yellow-400" },
+    ],
+  },
+  {
+    title: "Databases",
+    items: [
+      { icon: FaDatabase, label: "PostgreSQL", color: "text-sky-600" },
+      { icon: FaDatabase, label: "MySQL", color: "text-orange-400" },
+      { icon: FaDatabase, label: "SQLite", color: "text-blue-400" },
+      { icon: FaDatabase, label: "MongoDB", color: "text-green-500" },
+    ],
+  },
+];
 
 const Skills = () => {
   const { darkMode } = useTheme();
 
   return (
-    <div className="text-center my-8 px-4">
-      <h2 className="text-3xl font-bold mb-8">Skills</h2>
+    <div className="text-center py-12 px-4">
+      <SectionHeading eyebrow="What I do" title="Skills" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-        <div
-          className={`shadow-lg rounded-lg p-6 ${darkMode ? 'bg-slate-700' : 'bg-slate-100'}`}
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          <h3 className="text-2xl font-semibold mb-4">General Skills</h3>
-          <ul className="list-none space-y-2">
-            <li className="flex items-center">
-              <FaPalette className="mr-2 text-blue-500" />
-              Web Design
-            </li>
-            <li className="flex items-center">
-              <FaLightbulb className="mr-2 text-blue-500" />
-              Design Thinking
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Full Stack Development
-            </li>
-            <li className="flex items-center">
-              <FaLightbulb className="mr-2 text-blue-500" />
-              Problem Solving
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Computer Literacy
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Software Development
-            </li>
-            <li className="flex items-center">
-              <FaServer className="mr-2 text-blue-500" />
-              Database Design and Management
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`shadow-lg rounded-lg p-6 ${darkMode ? 'bg-slate-700' : 'bg-slate-100'}`}
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          {" "}
-          <h3 className="text-2xl font-semibold mb-4">
-            Technologies and Frameworks
-          </h3>
-          <ul className="list-none space-y-2">
-            <li className="flex items-center">
-              <FaReact className="mr-2 text-blue-500" />
-              React
-            </li>
-            <li className="flex items-center">
-              <FaVuejs className="mr-2 text-blue-500" />
-              Vue.js
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Tailwind
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Flask
-            </li>
-            <li className="flex items-center">
-              <FaNodeJs className="mr-2 text-blue-500" />
-              Node.js
-            </li>
-            <li className="flex items-center">
-              <FaLaptopCode className="mr-2 text-blue-500" />
-              Express
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`shadow-lg rounded-lg p-6 ${darkMode ? 'bg-slate-700' : 'bg-slate-100'}`}
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          {" "}
-          <h3 className="text-2xl font-semibold mb-4">Programming Languages</h3>
-          <ul className="list-none space-y-2">
-            <li className="flex items-center">
-              <FaPython className="mr-2 text-blue-500" />
-              Python
-            </li>
-            <li className="flex items-center">
-              <FaJava className="mr-2 text-blue-500" />
-              Java
-            </li>
-            <li className="flex items-center">
-              <FaJsSquare className="mr-2 text-blue-500" />
-              JavaScript
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`shadow-lg rounded-lg p-6 ${darkMode ? 'bg-slate-700' : 'bg-slate-100'}`}
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          {" "}
-          <h3 className="text-2xl font-semibold mb-4">Databases</h3>
-          <ul className="list-none space-y-2">
-            <li className="flex items-center">
-              <FaDatabase className="mr-2 text-blue-500" />
-              PostgreSQL
-            </li>
-            <li className="flex items-center">
-              <FaDatabase className="mr-2 text-blue-500" />
-              MySQL
-            </li>
-            <li className="flex items-center">
-              <FaDatabase className="mr-2 text-blue-500" />
-              SQLite
-            </li>
-            <li className="flex items-center">
-              <FaDatabase className="mr-2 text-blue-500" />
-              MongoDB
-            </li>
-          </ul>
-        </div>
+        {skillGroups.map((group) => (
+          <div
+            key={group.title}
+            className={`rounded-2xl border p-6 text-left shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${
+              darkMode
+                ? "border-slate-600/40 bg-slate-700/60"
+                : "border-slate-200 bg-white"
+            }`}
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <h3 className="font-display text-2xl font-semibold mb-4">
+              {group.title}
+            </h3>
+            <ul className="list-none space-y-3">
+              {group.items.map(({ icon: Icon, label, color }) => (
+                <li key={label} className="flex items-center">
+                  <Icon className={`mr-3 text-xl ${color}`} />
+                  {label}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const Profile = () => {
     <div
       className={`${darkMode ? "bg-slate-800" : "bg-slate-100"}`}
       style={{
-        backgroundImage: `url(${
+        backgroundImage: `url(${process.env.PUBLIC_URL}/${
           darkMode ? "dark-pattern.svg" : "light-pattern.svg"
         })`,
       }}
@@ -23,23 +23,23 @@ const Profile = () => {
           darkMode ? "bg-slate-800 text-white" : "bg-slate-100 text-black"
         }`}
       >
-        <div id="about" >
+        <div id="about" className="scroll-mt-20">
           <About />
         </div>
-        <div id="skills" >
+        <div id="skills" className="scroll-mt-20">
           <Skills />
         </div>
-        <div id="projects" >
+        <div id="projects" className="scroll-mt-20">
           <Projects />
         </div>
-        <div id="experience" >
+        <div id="experience" className="scroll-mt-20">
           <Experience />
         </div>
-        <div id="interests" >
-            <Interests />
-          </div>
-        <div id="contact-info" >
-            <ContactInfo />
+        <div id="interests" className="scroll-mt-20">
+          <Interests />
+        </div>
+        <div id="contact-info" className="scroll-mt-20">
+          <ContactInfo />
         </div>
       </div>
     </div>

@@ -2,62 +2,47 @@ import React from 'react';
 import { Link } from 'react-scroll';
 import { useTheme } from '../contexts/ThemeContext';
 
+const navItems = [
+  { to: 'about', label: 'About' },
+  { to: 'skills', label: 'Skills' },
+  { to: 'projects', label: 'Projects' },
+  { to: 'experience', label: 'Experience' },
+  { to: 'interests', label: 'Interests' },
+  { to: 'contact-info', label: 'Contact' },
+];
 
 const Header = () => {
   const { darkMode } = useTheme();
+
   return (
-    <header className={`mt-4 absolute fixed top-0 left-0 w-full py-4 bg-opacity-75 ${darkMode ? 'text-white' : 'text-slate'} `}>
-      <nav className="container mx-auto flex flex-wrap justify-center items-center p-4">
-        <div className="flex flex-wrap justify-center space-x-2 md:space-x-4 shadow-md rounded-full">
+    <header className="fixed top-0 left-0 z-40 w-full py-4">
+      <nav className="container mx-auto flex justify-center px-4">
+        <div
+          className={`flex flex-wrap justify-center gap-1 rounded-full border px-2 py-1 shadow-lg backdrop-blur-md ${
+            darkMode
+              ? 'border-white/10 bg-slate-900/60 text-white'
+              : 'border-white/60 bg-white/60 text-slate-800'
+          }`}
+        >
+          {navItems.map(({ to, label }) => (
             <Link
-              to="about"
+              key={to}
+              to={to}
+              spy={true}
               smooth={true}
               duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
-              >
-              About
-            </Link>
-            <Link
-              to="skills"
-              smooth={true}
-              duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
+              offset={-80}
+              activeClass={
+                darkMode ? 'bg-white/10 text-cyan-300' : 'bg-blue-500/10 text-blue-600'
+              }
+              className={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                darkMode ? 'hover:text-cyan-300' : 'hover:text-blue-600'
+              }`}
             >
-              Skills
+              {label}
             </Link>
-            <Link
-              to="projects"
-              smooth={true}
-              duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
-            >
-              Projects
-            </Link>
-            <Link
-              to="experience"
-              smooth={true}
-              duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
-            >
-              Experience
-            </Link>
-            <Link
-              to="interests"
-              smooth={true}
-              duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
-            >
-              Interests
-            </Link>
-            <Link
-              to="contact-info"
-              smooth={true}
-              duration={1000}
-              className={`cursor-pointer py-2 px-3 ${darkMode ? 'hover:text-yellow-500' : 'hover:text-orange-500'}`}
-            >
-              Contact
-            </Link>
-            </div>
+          ))}
+        </div>
       </nav>
     </header>
   );
