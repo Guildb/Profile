@@ -381,7 +381,7 @@ MSG
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-aurora2 via-accent to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-aurora2 to-accent bg-clip-text text-transparent;
   }
 }
 ```
@@ -423,6 +423,17 @@ module.exports = {
       fontSize: {
         hero: ['clamp(2.75rem, 11vw, 8.5rem)', { lineHeight: '0.92', letterSpacing: '-0.04em' }],
         section: ['clamp(1.85rem, 4.5vw, 3.25rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+      },
+      // ProfilePicture.js still uses `animate-float`. Task 10 rewrites that
+      // component and removes both the class and these two blocks.
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
       },
     },
   },
@@ -1714,6 +1725,19 @@ export default ProfilePicture;
 `w-60`. Supplying them prevents layout shift. The portrait is below the fold, so
 `loading="lazy"` is correct here — the hero image in Task 11 must **not** be
 lazy-loaded, as it is the LCP candidate.
+
+- [ ] **Step 6b: Drop the now-unused float animation**
+
+The rewritten `ProfilePicture` above no longer uses `animate-float`, and nothing
+else does. Remove the `animation.float` and `keyframes.float` blocks from
+`tailwind.config.js` (Task 2 kept them alive only for this component), then
+confirm nothing else referenced them:
+
+```bash
+grep -rn "animate-float" src/ || echo "OK: no references remain"
+```
+
+Expected: `OK: no references remain`.
 
 - [ ] **Step 7: Verify the payload dropped**
 
