@@ -15,7 +15,14 @@
 These apply to **every** task. They are copied verbatim from the spec and from
 `modern-web-guidance` guides retrieved during planning.
 
-- **Palette tokens are fixed.** Dark: canvas `#04060E`, aurora-1 `#1B4D8F`, aurora-2 `#0FB5A0`, accent `#E2714C`, text `#E8ECF4`, muted `#8A97AD`. Light: canvas `#F4F1EC`, accent `#C4522C`, text `#0B1220`, muted `#5A6478`. Never introduce a colour outside this set.
+- **Palette tokens are fixed.** Dark: canvas `#04060E`, aurora-1 `#1B4D8F`, aurora-2 `#0FB5A0`, accent `#E2714C`, text `#E8ECF4`, muted `#8A97AD`. Light: canvas `#F4F1EC`, accent `#C4522C`, text `#0B1220`, muted `#5A6478`. Never introduce a **hue** outside this set.
+  - **Explicit exception: neutral white and black at low alpha**, used only as
+    surface tints, hairline borders, glare and shadow — the `--surface`,
+    `--hairline`, glass glare and box-shadow values. A frosted surface is a
+    neutral scrim over whatever sits behind it; there is no way to express one
+    using only the six hues above, and forcing a hued scrim would tint every
+    panel. These neutrals must never carry a hue and must never exceed the
+    alpha already defined in the tokens.
 - **Only `transform`, `opacity` and `filter` may be animated.** Never animate `width`, `height`, `top`, `left`, or `background-position`.
 - **No CSS scroll-driven animations** (`animation-timeline`, `view()`, `scroll()`). Firefox has zero support. All scroll-linked motion uses Framer Motion `useScroll`/`useTransform`, which works in every target browser. This is a deliberate deviation from the retrieved guides' preferred technique, made because we already ship a JS motion library.
 - **The aurora is CSS radial-gradients on a blurred composited layer.** Never canvas, never WebGL.
