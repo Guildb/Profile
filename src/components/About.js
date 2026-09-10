@@ -52,8 +52,6 @@ const Bio = () => {
       <SectionHeading eyebrow="Who I am" title="About Me" />
       <p
         className="text-lg mt-2 max-w-3xl mx-auto"
-        data-aos="zoom-in-up"
-        data-aos-easing="ease-in-sine"
       >
         I'm a Portuguese software engineer based in the UK, currently working
         as a Web Support Engineer at ICAAL. After graduating with a
@@ -64,15 +62,11 @@ const Bio = () => {
       <div className="flex flex-col md:flex-row items-center justify-center my-12 w-full gap-8">
         <div
           className="flex justify-center w-full md:w-1/2"
-          data-aos="zoom-in-left"
-          data-aos-easing="ease-in-sine"
         >
           <ProfilePicture />
         </div>
         <div
           className="w-full md:w-1/2 flex justify-center md:justify-start"
-          data-aos="zoom-in-right"
-          data-aos-easing="ease-in-sine"
         >
           <ul className="list-none text-left space-y-3">
             {facts.map(({ icon: Icon, label, value }) => (
@@ -101,8 +95,6 @@ const Bio = () => {
             ? "border-slate-600/40 bg-slate-700/40"
             : "border-slate-200 bg-white"
         }`}
-        data-aos="zoom-in-down"
-        data-aos-easing="ease-in-sine"
       >
         <p>
           I have vast experience with full-stack development and a solid

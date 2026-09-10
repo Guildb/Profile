@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-scroll';
 import { useTheme } from '../contexts/ThemeContext';
 
 const navItems = [
@@ -25,22 +24,13 @@ const Header = () => {
           }`}
         >
           {navItems.map(({ to, label }) => (
-            <Link
+            <a
               key={to}
-              to={to}
-              spy={true}
-              smooth={true}
-              duration={1000}
-              offset={-80}
-              activeClass={
-                darkMode ? 'bg-white/10 text-cyan-300' : 'bg-blue-500/10 text-blue-600'
-              }
-              className={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium transition-colors duration-300 ${
-                darkMode ? 'hover:text-cyan-300' : 'hover:text-blue-600'
-              }`}
+              href={`#${to}`}
+              className="cursor-pointer rounded-full px-3 py-2 text-sm font-medium transition-colors duration-300"
             >
               {label}
-            </Link>
+            </a>
           ))}
         </div>
       </nav>

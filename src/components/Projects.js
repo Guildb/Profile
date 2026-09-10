@@ -54,8 +54,6 @@ const Projects = () => {
                 ? "border-slate-600/40 bg-slate-700/60"
                 : "border-slate-200 bg-white"
             }`}
-            data-aos="flip-up"
-            data-aos-delay="300"
           >
             <div className="h-1.5 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400" />
             <div className="p-6">

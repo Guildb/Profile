@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "./Header";
-import { Link } from "react-scroll";
 import {
   FaLinkedin,
   FaGithub,
@@ -76,20 +75,15 @@ const LandingPage = () => {
             hear from you!
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              to="contact-info"
-              smooth={true}
-              duration={1000}
+            <a
+              href="#contact-info"
               className="flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-105"
             >
               <FaPaperPlane className="h-4 w-4" />
               Get in touch
-            </Link>
-            <Link
-              to="projects"
-              smooth={true}
-              duration={1000}
-              offset={-80}
+            </a>
+            <a
+              href="#projects"
               className={`cursor-pointer rounded-full border px-6 py-3 font-semibold transition-transform duration-300 hover:scale-105 ${
                 darkMode
                   ? "border-white/30 hover:bg-white/10"
@@ -97,7 +91,7 @@ const LandingPage = () => {
               }`}
             >
               View my work
-            </Link>
+            </a>
           </div>
           <div className="mt-8 flex items-center justify-center gap-3">
             {socials.map(({ href, icon: Icon, label, download }) => (
@@ -120,11 +114,8 @@ const LandingPage = () => {
             ))}
           </div>
         </div>
-        <Link
-          to="about"
-          smooth={true}
-          duration={1000}
-          offset={-80}
+        <a
+          href="#about"
           aria-label="Scroll to About"
           className="absolute bottom-6 hidden cursor-pointer sm:block"
         >
@@ -133,7 +124,7 @@ const LandingPage = () => {
               darkMode ? "text-white/80" : "text-slate-700/80"
             }`}
           />
-        </Link>
+        </a>
       </div>
     </div>
   );

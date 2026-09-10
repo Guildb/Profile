@@ -76,8 +76,6 @@ const Skills = () => {
                 ? "border-slate-600/40 bg-slate-700/60"
                 : "border-slate-200 bg-white"
             }`}
-            data-aos="fade-up"
-            data-aos-delay="300"
           >
             <h3 className="font-display text-2xl font-semibold mb-4">
               {group.title}

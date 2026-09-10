@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React from 'react';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import BackToTopButton from './components/BackToTopButton';
@@ -8,28 +6,14 @@ import ThemeToggleButton from './components/ThemeToggleButton';
 import Footer from './components/Footer';
 import { ThemeProvider } from './contexts/ThemeContext';
 
-
-const App = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800, // Duration of the animation in milliseconds
-      easing: 'ease-out-cubic',
-      once: true, // Only animate elements the first time they scroll into view
-      offset: 60,
-    });
-  }, []);
-
-  return (
-    <ThemeProvider>
-      <div>
-        <LandingPage />
-        <Profile />
-        <BackToTopButton />
-        <ThemeToggleButton />
-        <Footer />
-      </div>
-    </ThemeProvider>
-  );
-};
+const App = () => (
+  <ThemeProvider>
+    <LandingPage />
+    <Profile />
+    <BackToTopButton />
+    <ThemeToggleButton />
+    <Footer />
+  </ThemeProvider>
+);
 
 export default App;

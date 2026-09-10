@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import SectionHeading from "./SectionHeading";
 
 const ContactInfo = () => {
@@ -80,7 +80,6 @@ const ContactInfo = () => {
             ? "border-slate-600/40 bg-slate-700/60"
             : "border-slate-200 bg-white"
         }`}
-        data-aos="fade-up"
       >
       {showNotification && (
         <div className="p-4">

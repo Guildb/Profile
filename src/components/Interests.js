@@ -55,8 +55,6 @@ const Interests = () => {
                 ? 'border-slate-600/40 bg-slate-700/60 text-white'
                 : 'border-slate-200 bg-white text-black'
             }`}
-            data-aos={group.aos}
-            data-aos-delay="300"
           >
             <h3 className="font-display text-2xl font-semibold mb-4">
               {group.title}

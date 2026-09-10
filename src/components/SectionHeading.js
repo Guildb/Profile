@@ -2,7 +2,7 @@ import React from "react";
 
 const SectionHeading = ({ eyebrow, title }) => {
   return (
-    <div className="text-center mb-12" data-aos="fade-up">
+    <div className="text-center mb-12">
       <span className="text-xs font-semibold uppercase tracking-[0.35em] text-blue-500">
         {eyebrow}
       </span>
