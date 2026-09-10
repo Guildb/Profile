@@ -147,10 +147,32 @@ export default App;
 
 - [ ] **Step 6: Remove every remaining `data-aos` attribute**
 
+Two passes. The first deletes lines that contain *only* a `data-aos`
+attribute; the second strips inline occurrences that share a line with other
+JSX. **Do not** use a single line-deleting pass: `src/components/SectionHeading.js:5`
+is `<div className="text-center mb-12" data-aos="fade-up">`, and deleting that
+line removes the opening tag of a component every section renders.
+
 ```bash
-grep -rln "data-aos" src/ | xargs sed -i '' -E '/data-aos(-[a-z]+)?=("[^"]*"|\{[^}]*\})/d'
+FILES=$(grep -rln "data-aos" src/)
+
+# Pass 1: lines that are nothing but a data-aos attribute
+echo "$FILES" | xargs sed -i '' -E '/^[[:space:]]*data-aos(-[a-z]+)?=("[^"]*"|\{[^}]*\})[[:space:]]*$/d'
+
+# Pass 2: attributes sharing a line with other JSX
+echo "$FILES" | xargs sed -i '' -E 's/[[:space:]]+data-aos(-[a-z]+)?=("[^"]*"|\{[^}]*\})//g'
+
 grep -rn "data-aos" src/ || echo "clean"
 ```
+
+Then confirm the JSX survived:
+
+```bash
+grep -n "text-center mb-12" src/components/SectionHeading.js
+```
+
+Expected: the `<div className="text-center mb-12">` line is still present, now
+without the attribute.
 
 Expected: `clean`. Reveal animations return in Task 6.
 
@@ -192,6 +214,58 @@ Expected: compiles successfully with **no warnings**. If webpack fails to
 resolve `motion/react`, fall back to `npm install framer-motion@11` and import
 from `framer-motion` instead — the API used in this plan is identical across
 both. Record which one was used, because every later task imports from it.
+
+- [ ] **Step 8b: Replace the broken CRA smoke test**
+
+`src/App.test.js` asserts the page renders a "learn react" link. It is CRA
+boilerplate and it **fails right now**, before any redesign work. Leaving it red
+for the rest of the plan would make every later task's "tests pass" evidence
+ambiguous, so it is replaced here rather than at the end.
+
+```jsx
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+beforeEach(() => {
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: false,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    disconnect: jest.fn(),
+    unobserve: jest.fn(),
+  }));
+  jest.spyOn(global, 'fetch').mockRejectedValue(new Error('offline'));
+});
+
+test('renders the name in the page heading', () => {
+  render(<App />);
+  expect(
+    screen.getByRole('heading', { level: 1, name: /renato cardoso/i })
+  ).toBeInTheDocument();
+});
+
+test('renders every section landmark', () => {
+  render(<App />);
+  ['about', 'skills', 'projects', 'experience', 'interests', 'contact-info'].forEach((id) => {
+    expect(document.getElementById(id)).toBeInTheDocument();
+  });
+});
+```
+
+Both assertions are written to hold against the **current** markup as well as the
+redesigned markup, so this test guards the whole plan rather than only its end
+state. Run it:
+
+```bash
+CI=true npx react-scripts test --watchAll=false
+```
+
+Expected: PASS, 2 tests, and the whole suite green. If the heading assertion
+fails because the current `<h1>` reads "Hi, I'm Renato Cardoso", that still
+matches `/renato cardoso/i` — investigate rather than weakening the assertion.
 
 - [ ] **Step 9: Commit**
 
@@ -1834,9 +1908,39 @@ const Profile = () => (
 export default Profile;
 ```
 
-Each section component must render its `SectionHeading` with
-`id={`${sectionId}-heading`}` so `aria-labelledby` resolves. Update
-`SectionHeading` to accept and forward an `id` prop onto its `<h2>`.
+- [ ] **Step 1b: Give `SectionHeading` an `id` prop**
+
+`aria-labelledby` above points at `${id}-heading`, so that element must exist.
+No other task adds it. Update `src/components/SectionHeading.js` to accept and
+forward `id` onto its `<h2>`:
+
+```jsx
+const SectionHeading = ({ id, eyebrow, title }) => (
+  <div className="text-center mb-12">
+    <span className="text-xs font-semibold uppercase tracking-[0.35em] text-accent">
+      {eyebrow}
+    </span>
+    <h2 id={id} className="font-display text-section font-bold mt-2">
+      {title}
+    </h2>
+    <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-aurora1 to-aurora2" />
+  </div>
+);
+```
+
+Then update each of the six section components to pass it —
+`<SectionHeading id="about-heading" ... />`, `id="skills-heading"`, and so on,
+matching the ids in the `sections` array above exactly.
+
+Verify every landmark resolves:
+
+```bash
+for s in about skills projects experience interests contact-info; do
+  grep -q "${s}-heading" src/components/*.js && echo "OK: $s" || echo "MISSING: $s";
+done
+```
+
+Expected: six `OK` lines.
 
 Note that `deferred` here is what Task 20 Step 2 relies on — `about` is
 excluded because it can be partly visible on tall screens.
@@ -2847,10 +2951,12 @@ MSG
 This task is a gate, not a formality. Do not report the work complete until
 every check below has been run and its output seen.
 
-- [ ] **Step 1: Replace the broken CRA smoke test**
+- [ ] **Step 1: Confirm the smoke test still guards the redesigned markup**
 
-`src/App.test.js` currently asserts the page renders a "learn react" link — CRA
-boilerplate that fails if run. Replace it:
+`src/App.test.js` was replaced back in Task 1 (the boilerplate version failed at
+baseline). Confirm it still passes against the finished redesign, and that its
+assertions are still the ones below — if a later task weakened them, restore
+them:
 
 ```jsx
 import { render, screen } from '@testing-library/react';
@@ -2955,12 +3061,15 @@ of dark** on first paint. Repeat in the opposite direction.
 Present the screenshots and the verification output to the user. **Do not run
 `npm run deploy`.** Deploying is the user's explicit decision.
 
-- [ ] **Step 10: Commit**
+- [ ] **Step 10: Commit any fixes**
+
+If Steps 1-8 required no changes, there is nothing to commit and the task ends
+here. Otherwise:
 
 ```bash
 git add -A
 git commit -m "$(cat <<'MSG'
-test: replace CRA boilerplate test with real smoke tests
+fix: address defects found in final verification
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 MSG
