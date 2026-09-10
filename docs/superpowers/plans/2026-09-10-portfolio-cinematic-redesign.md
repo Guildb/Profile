@@ -729,6 +729,20 @@ Expected: both print their "no ..." message. `useTheme` should now be imported
 to render the correct icon — so if that one file appears, that is correct and
 expected; every other component must be clean.
 
+- [ ] **Step 3b: Restore nav hover feedback**
+
+Task 1's interim anchor markup in `src/components/Header.js` dropped the
+per-theme `hover:text-*` class entirely, so nav items currently have no hover
+state at all. Restore it with the theme-aware token, which needs no `dark:`
+variant because `--accent` is already defined per theme:
+
+```jsx
+className="cursor-pointer rounded-full px-3 py-2 text-sm font-medium text-ink transition-colors duration-300 hover:text-accent"
+```
+
+The active-section highlight stays absent until Task 19 rebuilds it properly —
+that gap is intentional.
+
 - [ ] **Step 4: Delete the AOS workaround**
 
 In `src/components/ThemeToggleButton.js`, remove the `setTimeout` that dispatches
