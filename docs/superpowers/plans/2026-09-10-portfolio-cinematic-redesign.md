@@ -97,8 +97,13 @@ layer changes on a broken baseline.
 - [ ] **Step 2: Remove dead and replaced dependencies**
 
 ```bash
-npm uninstall aos styled-components react-vertical-timeline-component react-scroll emailjs-com
+npm uninstall aos styled-components react-scroll emailjs-com
 ```
+
+**`react-vertical-timeline-component` is deliberately NOT uninstalled here.**
+`src/components/Experience.js` still imports it, and that import is not removed
+until Task 16. Uninstalling it now is a hard "Module not found" build failure,
+not a warning. Task 16 removes the import and the package together.
 
 Rationale, so a fresh reader does not re-add them: `styled-components` is
 imported nowhere. `aos` is replaced by the motion system in Phase 2.
@@ -106,6 +111,12 @@ imported nowhere. `aos` is replaced by the motion system in Phase 2.
 bundled CSS fights the redesign. `react-scroll` is replaced by native smooth
 scrolling plus `useActiveSection`. `emailjs-com` is deprecated in favour of
 `@emailjs/browser`.
+
+Because `emailjs-com` is uninstalled in this step and `@emailjs/browser` is
+installed in the next one, you must also update the single import in
+`src/components/ContactInfo.js` from `emailjs-com` to `@emailjs/browser`. The
+send API is identical, so no other change is needed there; Task 18 rebuilds the
+rest of that component.
 
 - [ ] **Step 3: Add the replacements**
 
@@ -2469,6 +2480,19 @@ CI=true npx react-scripts test --testPathPattern Experience
 ```
 
 Expected: PASS, 2 tests.
+
+- [ ] **Step 4b: Uninstall the timeline library**
+
+Task 1 deliberately left this installed because `Experience.js` still imported
+it. Step 3 removed that import, so the package can go now:
+
+```bash
+npm uninstall react-vertical-timeline-component
+grep -rn "react-vertical-timeline" src/ || echo "OK: no references remain"
+npm run build
+```
+
+Expected: `OK: no references remain`, and a clean build.
 
 - [ ] **Step 5: Remove the now-dead timeline CSS override**
 
