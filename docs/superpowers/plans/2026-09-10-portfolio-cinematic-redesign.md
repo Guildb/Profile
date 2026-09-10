@@ -544,6 +544,37 @@ test('a stored preference beats the system preference', () => {
   });
   renderProbe();
   expect(screen.getByRole('button')).toHaveTextContent('light');
+  expect(document.documentElement).not.toHaveClass('dark');
+});
+
+test('falls back to the system preference when localStorage throws', () => {
+  const getItem = jest
+    .spyOn(Storage.prototype, 'getItem')
+    .mockImplementation(() => {
+      throw new Error('private browsing');
+    });
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: true,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+
+  renderProbe();
+
+  expect(screen.getByRole('button')).toHaveTextContent('dark');
+  expect(document.documentElement).toHaveClass('dark');
+  getItem.mockRestore();
+});
+
+test('an unrecognised stored value falls back to the system preference', () => {
+  window.localStorage.setItem('theme', 'chartreuse');
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: true,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+  renderProbe();
+  expect(screen.getByRole('button')).toHaveTextContent('dark');
 });
 
 test('toggling flips the theme, the class and the stored value', () => {
@@ -635,16 +666,26 @@ In `public/index.html`, immediately after `<div id="root"></div>`, insert:
 ```html
 <script>
   (function () {
+    // Guard ONLY the storage read. Wrapping the whole body would mean a
+    // throwing localStorage (private browsing) skips the matchMedia fallback
+    // entirely, painting light and then flashing to dark once React mounts —
+    // exactly the flash this script exists to prevent.
+    var stored = null;
     try {
-      var stored = localStorage.getItem('theme');
-      var dark = stored
+      stored = localStorage.getItem('theme');
+    } catch (e) {}
+    var dark =
+      stored === 'dark' || stored === 'light'
         ? stored === 'dark'
         : window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (dark) document.documentElement.classList.add('dark');
-    } catch (e) {}
+    if (dark) document.documentElement.classList.add('dark');
   })();
 </script>
 ```
+
+This mirrors `readInitialTheme` exactly: validate the stored value strictly,
+and reach `matchMedia` whenever the stored value is absent, invalid, or
+unreadable. **The two must stay in lockstep** — any divergence is a flash.
 
 This runs before React mounts, so the correct canvas colour is painted on the
 first frame. Without it the page flashes light before hydrating.
