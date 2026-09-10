@@ -27,6 +27,17 @@ module.exports = {
         hero: ['clamp(2.75rem, 11vw, 8.5rem)', { lineHeight: '0.92', letterSpacing: '-0.04em' }],
         section: ['clamp(1.85rem, 4.5vw, 3.25rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
       },
+      // ProfilePicture.js still uses `animate-float`. Task 10 rewrites that
+      // component and removes both the class and these two blocks.
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
+      },
     },
   },
   plugins: [],

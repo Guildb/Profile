@@ -69,6 +69,6 @@
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-aurora2 via-accent to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-aurora2 to-accent bg-clip-text text-transparent;
   }
 }
