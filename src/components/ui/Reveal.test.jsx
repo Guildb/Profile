@@ -28,3 +28,15 @@ test('honours the requested element type', () => {
   render(<Reveal as="section" aria-label="wrapped">content</Reveal>);
   expect(screen.getByLabelText('wrapped').tagName).toBe('SECTION');
 });
+
+test('forwards props on the reduced-motion path too', () => {
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: true,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+  render(<Reveal as="section" aria-label="wrapped" className="tracked">content</Reveal>);
+  const el = screen.getByLabelText('wrapped');
+  expect(el.tagName).toBe('SECTION');
+  expect(el).toHaveClass('tracked');
+});
