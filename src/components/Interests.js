@@ -1,6 +1,12 @@
-import React from 'react';
-import SectionHeading from './SectionHeading';
-import { interestGroups } from '../data/interests';
+import React from "react";
+import * as motionReact from "motion/react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./ui/Reveal";
+import GlassPanel from "./ui/GlassPanel";
+import { springs, revealUp } from "../lib/motion";
+import { interestGroups } from "../data/interests";
+
+const { motion } = motionReact;
 
 const Interests = () => {
   return (
@@ -10,11 +16,13 @@ const Interests = () => {
         eyebrow="A little bit more about myself"
         title="Interests"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      <Reveal stagger className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {interestGroups.map((group) => (
-          <div
+          <GlassPanel
             key={group.title}
-            className="rounded-2xl border border-hairline bg-surface p-6 text-left text-ink shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            as={motion.div}
+            variants={revealUp}
+            className="p-6 text-left text-ink"
           >
             <h3 className="font-display text-2xl font-semibold mb-4">
               {group.title}
@@ -22,16 +30,20 @@ const Interests = () => {
             <ul className="list-none space-y-3">
               {group.items.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center">
-                  <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                  <motion.span
+                    whileHover={{ rotate: -8, scale: 1.12 }}
+                    transition={springs.snappy}
+                    className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent"
+                  >
                     <Icon />
-                  </span>
+                  </motion.span>
                   {label}
                 </li>
               ))}
             </ul>
-          </div>
+          </GlassPanel>
         ))}
-      </div>
+      </Reveal>
     </div>
   );
 };
