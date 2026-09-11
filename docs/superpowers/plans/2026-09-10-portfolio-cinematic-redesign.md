@@ -3025,6 +3025,31 @@ whole contact form and the submit button, without skipping a section.
 If any section is skipped, remove `deferred-section` from it and note why. A
 working tab order beats a rendering optimisation.
 
+- [ ] **Step 3b: Fix the washed-out light mode**
+
+Verified by screenshot after Task 11: **dark mode reads correctly** — the aurora
+is visible, the photo sits back as texture, the depth stack reads. **Light mode
+does not.** Bone canvas (`#F4F1EC`) plus a 20%-opacity bright daylight photo
+plus an aurora dialled to `0.35` composites to a flat, washed-out field with no
+perceptible depth. It reads as the old design with bigger type.
+
+Three adjustments, applied together and re-checked by screenshot:
+
+1. **Drop the hero photo much further in light mode.** It is a bright image on
+   a bright canvas, so 20% is far too strong there even though it is right on
+   the dark canvas. Use `opacity-[0.08] dark:opacity-20` on the hero `<img>`.
+2. **Raise the light-mode aurora** from `0.35` to about `0.55` in the
+   `:root:not(.dark) .aurora-layer` rule. "A whisper" was too literal — at 0.35
+   over a bright ground it vanishes entirely.
+3. **Deepen the light-mode glass tint.** `--surface-alpha: 0.70` white on bone
+   gives almost no separation between panel and ground. Reduce toward `0.55`
+   and confirm the hairline border still reads.
+
+Also from the same screenshot pass: the theme-toggle button and the nav pill
+both render conspicuously bright against the dark canvas. Both use `bg-surface`
+plus `backdrop-blur`; check they are not sitting over the bright hero photo in a
+way that defeats the low-alpha tint, and tone them down if so.
+
 - [ ] **Step 4: Check contrast in both themes**
 
 Glass surfaces reduce effective contrast, so this must be measured rather than
