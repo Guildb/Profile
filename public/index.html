@@ -37,13 +37,19 @@
     <div id="root"></div>
     <script>
       (function () {
+        // Guard ONLY the storage read. Wrapping the whole body would mean a
+        // throwing localStorage (private browsing) skips the matchMedia fallback
+        // entirely, painting light and then flashing to dark once React mounts —
+        // exactly the flash this script exists to prevent.
+        var stored = null;
         try {
-          var stored = localStorage.getItem('theme');
-          var dark = stored
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        var dark =
+          stored === 'dark' || stored === 'light'
             ? stored === 'dark'
             : window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (dark) document.documentElement.classList.add('dark');
-        } catch (e) {}
+        if (dark) document.documentElement.classList.add('dark');
       })();
     </script>
     <!--

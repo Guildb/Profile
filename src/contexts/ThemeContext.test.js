@@ -49,6 +49,37 @@ test('a stored preference beats the system preference', () => {
   });
   renderProbe();
   expect(screen.getByRole('button')).toHaveTextContent('light');
+  expect(document.documentElement).not.toHaveClass('dark');
+});
+
+test('falls back to the system preference when localStorage throws', () => {
+  const getItem = jest
+    .spyOn(Storage.prototype, 'getItem')
+    .mockImplementation(() => {
+      throw new Error('private browsing');
+    });
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: true,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+
+  renderProbe();
+
+  expect(screen.getByRole('button')).toHaveTextContent('dark');
+  expect(document.documentElement).toHaveClass('dark');
+  getItem.mockRestore();
+});
+
+test('an unrecognised stored value falls back to the system preference', () => {
+  window.localStorage.setItem('theme', 'chartreuse');
+  window.matchMedia = jest.fn().mockReturnValue({
+    matches: true,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  });
+  renderProbe();
+  expect(screen.getByRole('button')).toHaveTextContent('dark');
 });
 
 test('toggling flips the theme, the class and the stored value', () => {
