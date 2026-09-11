@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 import SectionHeading from "./SectionHeading";
 
+const CARD_SURFACE = "rgb(var(--surface) / var(--surface-alpha))";
+
 const EducationExperience = () => {
   const experiences = [
     {
@@ -59,7 +61,7 @@ const EducationExperience = () => {
           <VerticalTimelineElement
             key={index}
             contentStyle={{
-              background: "rgb(var(--surface) / var(--surface-alpha))",
+              background: CARD_SURFACE,
               color: "rgb(var(--ink))",
               borderRadius: "1rem",
               borderTop: `4px solid ${
@@ -68,14 +70,14 @@ const EducationExperience = () => {
               boxShadow: "0 10px 30px rgba(2, 6, 23, 0.15)",
             }}
             contentArrowStyle={{
-              borderRight: "7px solid rgb(var(--surface) / var(--surface-alpha))",
+              borderRight: `7px solid ${CARD_SURFACE}`,
             }}
             date={experience.date}
             dateClassName="font-semibold lg:text-muted"
             iconStyle={{
               background: experience.current
-                ? "linear-gradient(135deg, rgb(var(--aurora-1)), rgb(var(--aurora-2)))"
-                : "rgb(var(--surface) / var(--surface-alpha))",
+                ? "linear-gradient(135deg, rgb(var(--aurora-1)), rgb(var(--accent)))"
+                : "rgb(var(--aurora-1))",
               color: "#fff",
               boxShadow:
                 "0 0 0 4px rgb(var(--canvas)), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)",
@@ -92,7 +94,7 @@ const EducationExperience = () => {
                 </span>
               )}
             </div>
-            <h4 className="vertical-timeline-element-subtitle text-md font-semibold text-gray-400">
+            <h4 className="vertical-timeline-element-subtitle text-md font-semibold text-muted">
               {experience.company
                 ? `${experience.company} · ${experience.location}`
                 : experience.location}
