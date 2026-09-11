@@ -250,11 +250,11 @@ beforeEach(() => {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   });
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    unobserve: jest.fn(),
-  }));
+  // IntersectionObserver is stubbed globally in src/setupTests.js, and that
+  // stub fires isIntersecting: true synchronously so `whileInView` actually
+  // reaches its `visible` variant. Do NOT re-mock it here with a no-op —
+  // that silently overrides the shared stub and makes reveal assertions
+  // pass vacuously.
   jest.spyOn(global, 'fetch').mockRejectedValue(new Error('offline'));
 });
 
@@ -1161,11 +1161,11 @@ beforeEach(() => {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   });
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    unobserve: jest.fn(),
-  }));
+  // IntersectionObserver is stubbed globally in src/setupTests.js, and that
+  // stub fires isIntersecting: true synchronously so `whileInView` actually
+  // reaches its `visible` variant. Do NOT re-mock it here with a no-op —
+  // that silently overrides the shared stub and makes reveal assertions
+  // pass vacuously.
 });
 
 test('is hidden from assistive technology', () => {
@@ -1849,11 +1849,11 @@ beforeEach(() => {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   });
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    unobserve: jest.fn(),
-  }));
+  // IntersectionObserver is stubbed globally in src/setupTests.js, and that
+  // stub fires isIntersecting: true synchronously so `whileInView` actually
+  // reaches its `visible` variant. Do NOT re-mock it here with a no-op —
+  // that silently overrides the shared stub and makes reveal assertions
+  // pass vacuously.
 });
 
 test('renders the name as the page heading', () => {
@@ -3083,11 +3083,11 @@ beforeEach(() => {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   });
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    unobserve: jest.fn(),
-  }));
+  // IntersectionObserver is stubbed globally in src/setupTests.js, and that
+  // stub fires isIntersecting: true synchronously so `whileInView` actually
+  // reaches its `visible` variant. Do NOT re-mock it here with a no-op —
+  // that silently overrides the shared stub and makes reveal assertions
+  // pass vacuously.
   jest.spyOn(global, 'fetch').mockRejectedValue(new Error('offline'));
 });
 
