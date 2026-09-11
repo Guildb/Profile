@@ -1769,6 +1769,11 @@ const ProfilePicture = () => (
 export default ProfilePicture;
 ```
 
+Note this also clears the last non-token hues in this file — the old
+`from-blue-600 via-sky-500 to-cyan-400` glow ring and `border-slate-800`.
+Task 4 deliberately deferred them here rather than converting a component it
+knew this task rewrites.
+
 `width`/`height` are the intrinsic pixel dimensions; CSS still sizes it to
 `w-60`. Supplying them prevents layout shift. The portrait is below the fold, so
 `loading="lazy"` is correct here — the hero image in Task 11 must **not** be
@@ -2733,7 +2738,7 @@ Expected: FAIL — the component currently imports `emailjs-com` and calls
 - Fix `phone: null` to `phone: ''`, which removes the controlled/uncontrolled React warning.
 - Fix `stroke-linecap`, `stroke-linejoin` and `stroke-width` to `strokeLinecap`, `strokeLinejoin` and `strokeWidth` on both status SVGs.
 - **Delete both `window.location.reload()` calls.** On success, call `setFormData` back to empty strings and set status to `'sent'`. On failure, leave `formData` untouched and set `'error'`.
-- Render the success confirmation in a container with `role="status"`, and the error in one with `role="alert"`.
+- Render the success confirmation in a container with `role="status"`, and the error in one with `role="alert"`. Rebuild that notification block with tokens — it still carries the pre-existing `dark:bg-gray-900` / `dark:text-gray-50` hues that Task 4 deferred to this task.
 - Add `required` to name, email and message; leave phone optional.
 - Style validity with `:user-invalid`, which is Baseline widely available:
 
