@@ -9,7 +9,6 @@ import {
 } from "react-icons/fa";
 import ProfilePicture from "./ProfilePicture";
 import SectionHeading from "./SectionHeading";
-import { useTheme } from "../contexts/ThemeContext";
 
 const facts = [
   {
@@ -45,8 +44,6 @@ const facts = [
 ];
 
 const Bio = () => {
-  const { darkMode } = useTheme();
-
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading eyebrow="Who I am" title="About Me" />
@@ -71,13 +68,7 @@ const Bio = () => {
           <ul className="list-none text-left space-y-3">
             {facts.map(({ icon: Icon, label, value }) => (
               <li key={label} className="flex items-center">
-                <span
-                  className={`mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
-                    darkMode
-                      ? "bg-slate-700 text-cyan-300"
-                      : "bg-blue-500/10 text-blue-600"
-                  }`}
-                >
+                <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <Icon />
                 </span>
                 <span>
@@ -89,13 +80,7 @@ const Bio = () => {
           </ul>
         </div>
       </div>
-      <div
-        className={`text-lg mt-2 text-justify max-w-4xl mx-auto rounded-2xl border p-6 shadow-lg ${
-          darkMode
-            ? "border-slate-600/40 bg-slate-700/40"
-            : "border-slate-200 bg-white"
-        }`}
-      >
+      <div className="text-lg mt-2 text-justify max-w-4xl mx-auto rounded-2xl border border-hairline bg-surface p-6 shadow-lg">
         <p>
           I have vast experience with full-stack development and a solid
           skill-set in both front and back-end development, that empowers me to

@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
 import emailjs from "@emailjs/browser";
 import SectionHeading from "./SectionHeading";
 
 const ContactInfo = () => {
-  const { darkMode } = useTheme();
-
-  const inputClass = `w-full rounded-xl border px-4 py-3 text-sm outline-none transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 ${
-    darkMode
-      ? "border-slate-600 bg-slate-800 text-white placeholder-slate-400"
-      : "border-slate-300 bg-white text-slate-900 placeholder-slate-400"
-  }`;
+  const inputClass =
+    "w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-sm text-ink placeholder-muted outline-none transition duration-300 focus:border-accent focus:ring-2 focus:ring-accent/50";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -74,13 +68,7 @@ const ContactInfo = () => {
   return (
     <div className="py-12 px-4">
       <SectionHeading eyebrow="Get in touch" title="Contact Me" />
-      <div
-        className={`max-w-xl mx-auto p-6 sm:p-8 shadow-lg rounded-2xl border ${
-          darkMode
-            ? "border-slate-600/40 bg-slate-700/60"
-            : "border-slate-200 bg-white"
-        }`}
-      >
+      <div className="max-w-xl mx-auto p-6 sm:p-8 shadow-lg rounded-2xl border border-hairline bg-surface">
       {showNotification && (
         <div className="p-4">
           <div
@@ -186,7 +174,7 @@ const ContactInfo = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-blue-500 hover:to-cyan-400 focus:outline-none"
+            className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:opacity-90 focus:outline-none"
           >
             Send Message
           </button>

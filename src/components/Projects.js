@@ -9,7 +9,6 @@ import {
   FaFlask,
   FaJs,
 } from "react-icons/fa";
-import { useTheme } from "../contexts/ThemeContext";
 import SectionHeading from "./SectionHeading";
 
 const projects = [
@@ -40,8 +39,6 @@ const projects = [
 ];
 
 const Projects = () => {
-  const { darkMode } = useTheme();
-
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading eyebrow="What I've built" title="My Projects" />
@@ -49,13 +46,9 @@ const Projects = () => {
         {projects.map((project) => (
           <div
             key={project.title}
-            className={`w-full overflow-hidden rounded-2xl border shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:w-2/3 ${
-              darkMode
-                ? "border-slate-600/40 bg-slate-700/60"
-                : "border-slate-200 bg-white"
-            }`}
+            className="w-full overflow-hidden rounded-2xl border border-hairline bg-surface shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl lg:w-2/3"
           >
-            <div className="h-1.5 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-aurora1 to-aurora2" />
             <div className="p-6">
               <h3 className="font-display text-2xl font-semibold mb-4">
                 {project.title}
@@ -65,11 +58,7 @@ const Projects = () => {
                 {project.tech.map(({ icon: Icon, label, color }) => (
                   <div
                     key={label}
-                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium ${
-                      darkMode
-                        ? "border-slate-500/50 bg-slate-800 text-slate-200"
-                        : "border-slate-200 bg-slate-100 text-slate-700"
-                    }`}
+                    className="inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1.5 text-sm font-medium text-ink"
                   >
                     <Icon className={`text-lg ${color}`} />
                     <span>{label}</span>

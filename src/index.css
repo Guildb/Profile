@@ -71,4 +71,18 @@
   .gradient-text {
     @apply bg-gradient-to-r from-aurora2 to-accent bg-clip-text text-transparent;
   }
+
+  /* Lets components pick a theme-specific background image (a photo, a
+     pattern) purely through CSS, without reading theme state in JS. The
+     component sets --bg-image-light/--bg-image-dark inline (each a
+     PUBLIC_URL-prefixed url()); this rule + the .dark override below pick
+     the right one from the current --bg-image-* variables set on the same
+     element. */
+  .bg-theme-image {
+    background-image: var(--bg-image-light);
+  }
+
+  .dark .bg-theme-image {
+    background-image: var(--bg-image-dark);
+  }
 }

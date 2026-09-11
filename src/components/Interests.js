@@ -10,7 +10,6 @@ import {
   FaCoffee,
   FaLaptopCode,
 } from 'react-icons/fa';
-import { useTheme } from '../contexts/ThemeContext';
 import SectionHeading from './SectionHeading';
 
 const interestGroups = [
@@ -38,8 +37,6 @@ const interestGroups = [
 ];
 
 const Interests = () => {
-  const { darkMode } = useTheme();
-
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading
@@ -50,11 +47,7 @@ const Interests = () => {
         {interestGroups.map((group) => (
           <div
             key={group.title}
-            className={`rounded-2xl border p-6 text-left shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${
-              darkMode
-                ? 'border-slate-600/40 bg-slate-700/60 text-white'
-                : 'border-slate-200 bg-white text-black'
-            }`}
+            className="rounded-2xl border border-hairline bg-surface p-6 text-left text-ink shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
           >
             <h3 className="font-display text-2xl font-semibold mb-4">
               {group.title}
@@ -62,13 +55,7 @@ const Interests = () => {
             <ul className="list-none space-y-3">
               {group.items.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center">
-                  <span
-                    className={`mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
-                      darkMode
-                        ? 'bg-slate-800 text-cyan-300'
-                        : 'bg-blue-500/10 text-blue-600'
-                    }`}
-                  >
+                  <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <Icon />
                   </span>
                   {label}

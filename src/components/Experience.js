@@ -10,12 +10,9 @@ import {
   FaServer,
   FaHeadset,
 } from "react-icons/fa";
-import { useTheme } from "../contexts/ThemeContext";
 import SectionHeading from "./SectionHeading";
 
 const EducationExperience = () => {
-  const { darkMode } = useTheme();
-
   const experiences = [
     {
       title: "Web Support Engineer",
@@ -62,31 +59,26 @@ const EducationExperience = () => {
           <VerticalTimelineElement
             key={index}
             contentStyle={{
-              background: darkMode ? "rgba(30, 41, 59, 0.9)" : "#ffffff",
-              color: darkMode ? "#f1f5f9" : "#334155",
+              background: "rgb(var(--surface) / var(--surface-alpha))",
+              color: "rgb(var(--ink))",
               borderRadius: "1rem",
-              borderTop: `4px solid ${experience.current ? "#22d3ee" : "#3b82f6"}`,
+              borderTop: `4px solid ${
+                experience.current ? "rgb(var(--aurora-2))" : "rgb(var(--aurora-1))"
+              }`,
               boxShadow: "0 10px 30px rgba(2, 6, 23, 0.15)",
             }}
             contentArrowStyle={{
-              borderRight: `7px solid ${
-                darkMode ? "rgba(30, 41, 59, 0.9)" : "#ffffff"
-              }`,
+              borderRight: "7px solid rgb(var(--surface) / var(--surface-alpha))",
             }}
             date={experience.date}
-            dateClassName={`font-semibold ${
-              darkMode ? "lg:text-slate-300" : "lg:text-slate-600"
-            }`}
+            dateClassName="font-semibold lg:text-muted"
             iconStyle={{
               background: experience.current
-                ? "linear-gradient(135deg, #2563eb, #06b6d4)"
-                : darkMode
-                ? "#334155"
-                : "#374151",
+                ? "linear-gradient(135deg, rgb(var(--aurora-1)), rgb(var(--aurora-2)))"
+                : "rgb(var(--surface) / var(--surface-alpha))",
               color: "#fff",
-              boxShadow: `0 0 0 4px ${
-                darkMode ? "#0f172a" : "#ffffff"
-              }, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)`,
+              boxShadow:
+                "0 0 0 4px rgb(var(--canvas)), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)",
             }}
             icon={<experience.icon />}
           >
@@ -95,7 +87,7 @@ const EducationExperience = () => {
                 {experience.title}
               </h3>
               {experience.current && (
-                <span className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-0.5 text-xs font-semibold text-white">
+                <span className="rounded-full bg-gradient-to-r from-aurora1 to-aurora2 px-3 py-0.5 text-xs font-semibold text-white">
                   Present
                 </span>
               )}

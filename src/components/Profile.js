@@ -5,24 +5,17 @@ import Interests from "./Interests";
 import Skills from "./Skills";
 import Projects from "./Projects";
 import Experience from "./Experience";
-import { useTheme } from "../contexts/ThemeContext";
 
 const Profile = () => {
-  const { darkMode } = useTheme();
   return (
     <div
-      className={`${darkMode ? "bg-slate-800" : "bg-slate-100"}`}
+      className="bg-theme-image bg-canvas"
       style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/${
-          darkMode ? "dark-pattern.svg" : "light-pattern.svg"
-        })`,
+        "--bg-image-light": `url(${process.env.PUBLIC_URL}/light-pattern.svg)`,
+        "--bg-image-dark": `url(${process.env.PUBLIC_URL}/dark-pattern.svg)`,
       }}
     >
-      <div
-        className={`container mx-auto shadow-lg ${
-          darkMode ? "bg-slate-800 text-white" : "bg-slate-100 text-black"
-        }`}
-      >
+      <div className="container mx-auto bg-canvas text-ink shadow-lg">
         <div id="about" className="scroll-mt-20">
           <About />
         </div>

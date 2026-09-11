@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "../contexts/ThemeContext";
 import SectionHeading from "./SectionHeading";
 import {
   FaLaptopCode,
@@ -62,8 +61,6 @@ const skillGroups = [
 ];
 
 const Skills = () => {
-  const { darkMode } = useTheme();
-
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading eyebrow="What I do" title="Skills" />
@@ -71,11 +68,7 @@ const Skills = () => {
         {skillGroups.map((group) => (
           <div
             key={group.title}
-            className={`rounded-2xl border p-6 text-left shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${
-              darkMode
-                ? "border-slate-600/40 bg-slate-700/60"
-                : "border-slate-200 bg-white"
-            }`}
+            className="rounded-2xl border border-hairline bg-surface p-6 text-left shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
           >
             <h3 className="font-display text-2xl font-semibold mb-4">
               {group.title}
