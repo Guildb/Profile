@@ -86,3 +86,20 @@
     background-image: var(--bg-image-dark);
   }
 }
+
+:root:not(.dark) .aurora-layer {
+  opacity: 0.35;
+}
+
+@keyframes aurora-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
+}
+@keyframes aurora-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(-7vw, 5vh, 0) scale(0.92); }
+}
+@keyframes aurora-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50%      { transform: translate3d(4vw, -6vh, 0) scale(1.15); }
+}
