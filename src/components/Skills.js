@@ -5,7 +5,7 @@ import { skillGroups } from "../data/skills";
 const Skills = () => {
   return (
     <div className="text-center py-12 px-4">
-      <SectionHeading eyebrow="What I do" title="Skills" />
+      <SectionHeading id="skills-heading" eyebrow="What I do" title="Skills" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {skillGroups.map((group) => (
           <div

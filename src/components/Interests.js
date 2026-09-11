@@ -6,6 +6,7 @@ const Interests = () => {
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading
+        id="interests-heading"
         eyebrow="A little bit more about myself"
         title="Interests"
       />

@@ -6,7 +6,7 @@ import { facts } from "../data/profile";
 const Bio = () => {
   return (
     <div className="text-center py-12 px-4">
-      <SectionHeading eyebrow="Who I am" title="About Me" />
+      <SectionHeading id="about-heading" eyebrow="Who I am" title="About Me" />
       <p
         className="text-lg mt-2 max-w-3xl mx-auto"
       >

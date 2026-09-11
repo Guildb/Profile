@@ -5,7 +5,7 @@ import { projects } from "../data/projects";
 const Projects = () => {
   return (
     <div className="text-center py-12 px-4">
-      <SectionHeading eyebrow="What I've built" title="My Projects" />
+      <SectionHeading id="projects-heading" eyebrow="What I've built" title="My Projects" />
       <div className="flex flex-col items-center space-y-8">
         {projects.map((project) => (
           <div

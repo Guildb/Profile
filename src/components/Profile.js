@@ -5,38 +5,35 @@ import Interests from "./Interests";
 import Skills from "./Skills";
 import Projects from "./Projects";
 import Experience from "./Experience";
+import AuroraBackground from "./ui/AuroraBackground";
+import Grain from "./ui/Grain";
 
-const Profile = () => {
-  return (
-    <div
-      className="bg-theme-image bg-canvas"
-      style={{
-        "--bg-image-light": `url(${process.env.PUBLIC_URL}/light-pattern.svg)`,
-        "--bg-image-dark": `url(${process.env.PUBLIC_URL}/dark-pattern.svg)`,
-      }}
-    >
-      <div className="container mx-auto bg-canvas text-ink shadow-lg">
-        <div id="about" className="scroll-mt-20">
-          <About />
-        </div>
-        <div id="skills" className="scroll-mt-20">
-          <Skills />
-        </div>
-        <div id="projects" className="scroll-mt-20">
-          <Projects />
-        </div>
-        <div id="experience" className="scroll-mt-20">
-          <Experience />
-        </div>
-        <div id="interests" className="scroll-mt-20">
-          <Interests />
-        </div>
-        <div id="contact-info" className="scroll-mt-20">
-          <ContactInfo />
-        </div>
-      </div>
+const sections = [
+  { id: "about", Component: About, deferred: false },
+  { id: "skills", Component: Skills, deferred: true },
+  { id: "projects", Component: Projects, deferred: true },
+  { id: "experience", Component: Experience, deferred: true },
+  { id: "interests", Component: Interests, deferred: true },
+  { id: "contact-info", Component: ContactInfo, deferred: true },
+];
+
+const Profile = () => (
+  <div className="relative bg-canvas">
+    <AuroraBackground className="fixed" />
+    <Grain />
+    <div className="relative z-[2] container mx-auto px-4">
+      {sections.map(({ id, Component, deferred }) => (
+        <section
+          key={id}
+          id={id}
+          aria-labelledby={`${id}-heading`}
+          className={`scroll-mt-20 ${deferred ? "deferred-section" : ""}`}
+        >
+          <Component />
+        </section>
+      ))}
     </div>
-  );
-};
+  </div>
+);
 
 export default Profile;

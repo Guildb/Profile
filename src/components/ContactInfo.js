@@ -67,7 +67,7 @@ const ContactInfo = () => {
 
   return (
     <div className="py-12 px-4">
-      <SectionHeading eyebrow="Get in touch" title="Contact Me" />
+      <SectionHeading id="contact-info-heading" eyebrow="Get in touch" title="Contact Me" />
       <div className="max-w-xl mx-auto p-6 sm:p-8 shadow-lg rounded-2xl border border-hairline bg-surface">
       {showNotification && (
         <div className="p-4">

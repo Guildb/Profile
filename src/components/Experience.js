@@ -12,7 +12,7 @@ const CARD_SURFACE = "rgb(var(--surface) / var(--surface-alpha))";
 const EducationExperience = () => {
   return (
     <div className="py-12 px-4">
-      <SectionHeading eyebrow="My journey" title="Experience" />
+      <SectionHeading id="experience-heading" eyebrow="My journey" title="Experience" />
       <VerticalTimeline>
         {experiences.map((experience, index) => (
           <VerticalTimelineElement
