@@ -17,10 +17,17 @@ const { motion, useMotionValue, useSpring, useTransform } = motionReact;
 // layer must offset by (280 - x, 280 - y) to put its own origin back at the
 // container's (0, 0). The static +280 margins supply the constant part; the
 // negated springs supply the -x/-y part.
-const Spotlight = ({ className = '' }) => {
+const Spotlight = ({ className = '', rawX: externalRawX, rawY: externalRawY }) => {
   const prefersReduced = usePrefersReducedMotion();
-  const rawX = useMotionValue(-500);
-  const rawY = useMotionValue(-500);
+  // The layer itself is pointer-events: none, so it can never observe
+  // pointer movement directly. A parent that owns the pointer handler (via
+  // the exported useSpotlightTracking helper) can pass its own MotionValues
+  // in as rawX/rawY; when it doesn't, fall back to local ones so the
+  // component still renders standalone.
+  const localRawX = useMotionValue(-500);
+  const localRawY = useMotionValue(-500);
+  const rawX = externalRawX ?? localRawX;
+  const rawY = externalRawY ?? localRawY;
   const x = useSpring(rawX, { stiffness: 120, damping: 25, mass: 0.6 });
   const y = useSpring(rawY, { stiffness: 120, damping: 25, mass: 0.6 });
   const negX = useTransform(x, (v) => -v);

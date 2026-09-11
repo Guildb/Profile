@@ -1,28 +1,125 @@
-import React from "react";
+import React, { useRef } from "react";
+import * as motionReact from "motion/react";
 import Header from "./Header";
+import AuroraBackground from "./ui/AuroraBackground";
+import Spotlight, { useSpotlightTracking } from "./ui/Spotlight";
+import GlassPanel from "./ui/GlassPanel";
+import { springs, revealStagger, revealUp } from "../lib/motion";
+import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 import { FaChevronDown, FaPaperPlane } from "react-icons/fa";
-import { socials } from "../data/profile";
+import { profile, socials } from "../data/profile";
+
+const { motion, useMotionValue, useScroll, useTransform } = motionReact;
+
+const nameWords = profile.name.split(" ");
 
 const LandingPage = () => {
+  const prefersReduced = usePrefersReducedMotion();
+  const sectionRef = useRef(null);
+  const rawX = useMotionValue(-500);
+  const rawY = useMotionValue(-500);
+  const handlePointerMove = useSpotlightTracking(rawX, rawY);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const panelY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const panelOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const panelBlur = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["blur(0px)", "blur(8px)"]
+  );
+  const panelStyle = prefersReduced
+    ? undefined
+    : { y: panelY, opacity: panelOpacity, filter: panelBlur };
+
   return (
-    <div
-      className="bg-theme-image relative min-h-screen bg-cover bg-center"
-      style={{
-        "--bg-image-light": `url(${process.env.PUBLIC_URL}/light-background.jpg)`,
-        "--bg-image-dark": `url(${process.env.PUBLIC_URL}/dark-background.jpg)`,
-      }}
+    <section
+      id="hero"
+      ref={sectionRef}
+      onPointerMove={prefersReduced ? undefined : handlePointerMove}
+      className="relative min-h-screen overflow-hidden bg-canvas"
     >
+      {/* z-1 layer: a textured photo sitting beneath the aurora, not a
+          full-bleed wash. Kept at low opacity so the aurora reads as the
+          dominant surface. This is the LCP candidate: eager, high priority,
+          never lazy-loaded. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      >
+        <picture>
+          <source
+            srcSet={`${process.env.PUBLIC_URL}/dark-background.webp`}
+            type="image/webp"
+            media="(prefers-color-scheme: dark)"
+          />
+          <source
+            srcSet={`${process.env.PUBLIC_URL}/light-background.webp`}
+            type="image/webp"
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/dark-background.jpg`}
+            alt=""
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            className="h-full w-full object-cover opacity-20"
+          />
+        </picture>
+      </div>
+
+      {/* z0: the animated aurora mesh, above the photo. */}
+      <AuroraBackground className="z-[1]" />
+
+      {/* z1: the pointer-tracked dot grid aperture. */}
+      <Spotlight className="z-[2]" rawX={rawX} rawY={rawY} />
+
       <Header />
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-white/60 via-white/30 to-canvas/90 px-4 py-24 text-center text-ink dark:from-black/60 dark:via-black/40">
-        <div className="w-full max-w-3xl rounded-3xl border border-hairline bg-surface p-8 shadow-2xl backdrop-blur-md sm:p-10">
+
+      {/* z2: content, in a glass panel with a gradient hairline border. */}
+      <div className="relative z-[3] flex min-h-screen flex-col items-center justify-center px-4 py-24 text-center text-ink">
+        <GlassPanel
+          as={motion.div}
+          style={panelStyle}
+          className="w-full max-w-3xl p-8 sm:p-10"
+        >
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-accent">
             Welcome to my portfolio
           </p>
-          <h1 className="font-display mt-4 text-4xl font-extrabold sm:text-6xl">
-            Hi, I'm <span className="gradient-text">Renato Cardoso</span>
+
+          <h1 className="font-display mt-4 text-hero font-extrabold">
+            {prefersReduced ? (
+              profile.name
+            ) : (
+              <>
+                <motion.span
+                  aria-hidden="true"
+                  className="inline-flex flex-wrap items-baseline justify-center gap-x-4"
+                  variants={revealStagger}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {nameWords.map((word) => (
+                    <motion.span
+                      key={word}
+                      variants={revealUp}
+                      transition={springs.snappy}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </motion.span>
+                <span className="sr-only">{profile.name}</span>
+              </>
+            )}
           </h1>
+
           <p className="mt-4 text-lg font-semibold sm:text-xl">
-            Web Support Engineer at ICAAL · Software Engineer
+            {profile.role} · {profile.discipline}
           </p>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted sm:text-base">
             Take a look around my page to see what I've been working on and
@@ -30,6 +127,7 @@ const LandingPage = () => {
             potential collaborations, don't hesitate to reach out. I'd love to
             hear from you!
           </p>
+
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#contact-info"
@@ -45,6 +143,7 @@ const LandingPage = () => {
               View my work
             </a>
           </div>
+
           <div className="mt-8 flex items-center justify-center gap-3">
             {socials.map(({ href, icon: Icon, label, download }) => (
               <a
@@ -61,7 +160,8 @@ const LandingPage = () => {
               </a>
             ))}
           </div>
-        </div>
+        </GlassPanel>
+
         <a
           href="#about"
           aria-label="Scroll to About"
@@ -70,7 +170,7 @@ const LandingPage = () => {
           <FaChevronDown className="h-6 w-6 animate-bounce text-ink/80" />
         </a>
       </div>
-    </div>
+    </section>
   );
 };
 
