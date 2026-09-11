@@ -1,47 +1,7 @@
 import React from "react";
-import {
-  FaBirthdayCake,
-  FaGraduationCap,
-  FaPhone,
-  FaEnvelope,
-  FaCity,
-  FaBriefcase,
-} from "react-icons/fa";
 import ProfilePicture from "./ProfilePicture";
 import SectionHeading from "./SectionHeading";
-
-const facts = [
-  {
-    icon: FaBriefcase,
-    label: "Work",
-    value: "Web Support Engineer at ICAAL",
-  },
-  {
-    icon: FaGraduationCap,
-    label: "Degree",
-    value: "BSc (Hons) First-Class, Software Engineering",
-  },
-  {
-    icon: FaBirthdayCake,
-    label: "Birthday",
-    value: "09/11/1996",
-  },
-  {
-    icon: FaPhone,
-    label: "Phone",
-    value: "+44 7576623476",
-  },
-  {
-    icon: FaEnvelope,
-    label: "Email",
-    value: "renatoscardoso@outlook.com",
-  },
-  {
-    icon: FaCity,
-    label: "City",
-    value: "Southampton, UK",
-  },
-];
+import { facts } from "../data/profile";
 
 const Bio = () => {
   return (

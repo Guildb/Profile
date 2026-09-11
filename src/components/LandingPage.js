@@ -1,31 +1,7 @@
 import React from "react";
 import Header from "./Header";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaChevronDown,
-  FaPaperPlane,
-} from "react-icons/fa";
-import { TbFileCv } from "react-icons/tb";
-
-const socials = [
-  {
-    href: "https://www.linkedin.com/in/renato-cardoso-1b94ba152/",
-    icon: FaLinkedin,
-    label: "LinkedIn",
-  },
-  {
-    href: "https://github.com/Guildb",
-    icon: FaGithub,
-    label: "GitHub",
-  },
-  {
-    href: `${process.env.PUBLIC_URL}/CV.pdf`,
-    icon: TbFileCv,
-    label: "Download CV",
-    download: true,
-  },
-];
+import { FaChevronDown, FaPaperPlane } from "react-icons/fa";
+import { socials } from "../data/profile";
 
 const LandingPage = () => {
   return (
