@@ -11,6 +11,9 @@ const AuroraBackground = ({ className = '' }) => {
     if (!node || typeof IntersectionObserver === 'undefined') return undefined;
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
+      // Grows the observed root by 10% on each side so the animation
+      // starts slightly before the layer actually scrolls into view,
+      // rather than popping in already mid-drift.
       { rootMargin: '10%' }
     );
     observer.observe(node);

@@ -1,5 +1,9 @@
 import React from 'react';
 
+// The <rect> below has no explicit fill, so it uses SVG's implicit black.
+// That's intentional, not a stray color literal: `filter='url(#n)'` replaces
+// the rect's pixel data with the feTurbulence noise before it's ever
+// painted, so the fill color is never actually rendered.
 const NOISE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E\")";
 
