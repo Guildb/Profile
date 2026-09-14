@@ -7,11 +7,6 @@ beforeEach(() => {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   });
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    unobserve: jest.fn(),
-  }));
   jest.spyOn(global, 'fetch').mockRejectedValue(new Error('offline'));
 });
 
@@ -22,9 +17,16 @@ test('renders the name in the page heading', () => {
   ).toBeInTheDocument();
 });
 
-test('renders every section landmark', () => {
+test('renders every section landmark with an accessible name from its heading', () => {
   render(<App />);
-  ['about', 'skills', 'projects', 'experience', 'interests', 'contact-info'].forEach((id) => {
-    expect(document.getElementById(id)).toBeInTheDocument();
+  [
+    'About Me',
+    'Skills',
+    'My Projects',
+    'Experience',
+    'Interests',
+    'Contact Me',
+  ].forEach((name) => {
+    expect(screen.getByRole('region', { name })).toBeInTheDocument();
   });
 });
