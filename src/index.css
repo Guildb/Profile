@@ -81,10 +81,16 @@
   .field-error {
     display: none;
   }
+}
 
-  .deferred-section {
-    content-visibility: auto;
-    contain-intrinsic-size: auto none auto 900px;
+@layer utilities {
+  /* Keeps an element scrollable (swipe, trackpad, keyboard focus) while
+     hiding its scrollbar; used by the horizontally scrolling mobile nav. */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }
 
