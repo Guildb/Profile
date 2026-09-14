@@ -11,7 +11,7 @@ export const experiences = [
     company: "ICAAL",
     location: "Southampton, UK",
     description:
-      "Working as part of ICAAL's web team, supporting and developing client websites — diagnosing and resolving issues, building new features and keeping sites fast, secure and up to date. Day to day I work across WordPress, Laravel, PHP, MySQL and Tailwind, with a growing focus on technical SEO.",
+      "Working as part of ICAAL's web team, supporting and developing client websites, diagnosing and resolving issues, building new features and keeping sites fast, secure and up to date. Day to day I work across WordPress, Laravel, PHP, MySQL and Tailwind, with a growing focus on technical SEO.",
     date: "Nov 2025 - Present",
     icon: FaHeadset,
     current: true,
