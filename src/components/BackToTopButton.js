@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { animateScroll as scroll } from 'react-scroll';
 import { FaArrowUp } from 'react-icons/fa';
 
 const BackToTopButton = () => {
@@ -16,10 +15,7 @@ const BackToTopButton = () => {
 
   // Scroll to the top of the page
   const scrollToTop = () => {
-    scroll.scrollToTop({
-      duration: 1000, // Duration in milliseconds
-      smooth: 'easeInOutQuad'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -33,7 +29,7 @@ const BackToTopButton = () => {
         <button
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-aurora1 to-aurora2 text-white shadow-lg transition-transform duration-300 hover:scale-110"
         >
           <FaArrowUp />
         </button>

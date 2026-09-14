@@ -2,22 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  :root {
+    --canvas: 4 6 14;
+    --surface: 255 255 255;
+    --surface-alpha: 0.04;
+    --hairline: 255 255 255;
+    --hairline-alpha: 0.12;
+    --aurora-1: 27 77 143;
+    --aurora-2: 15 181 160;
+    --accent: 226 113 76;
+    --ink: 232 236 244;
+    --muted: 138 151 173;
+  }
+
+  :root:not(.dark) {
+    --canvas: 244 241 236;
+    --surface: 255 255 255;
+    --surface-alpha: 0.55;
+    --hairline: 11 18 32;
+    --hairline-alpha: 0.18;
+    --accent: 179 75 40;
+    --ink: 11 18 32;
+    --muted: 79 89 108;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent));
+    color: rgb(var(--canvas));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+  }
 }
 
-body {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-}
-
-body.dark {
-  background-color: #1a202c;
-  color: #a0aec0;
-}
-
-::selection {
-  background-color: #3b82f6;
-  color: #ffffff;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -29,23 +63,53 @@ body.dark {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: rgb(var(--muted) / 0.5);
   border-radius: 9999px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #475569;
 }
 
 @layer components {
-  .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 bg-clip-text text-transparent;
+  .field-input:user-invalid {
+    border-color: rgb(var(--accent));
+  }
+  .field-input:user-invalid ~ .field-error {
+    display: flex;
+  }
+  .field-error {
+    display: none;
   }
 }
 
-/* Accent gradient for the experience timeline line */
-.vertical-timeline::before {
-  background: linear-gradient(180deg, #3b82f6, #22d3ee) !important;
-  width: 4px;
-  border-radius: 9999px;
+@layer utilities {
+  /* Keeps an element scrollable (swipe, trackpad, keyboard focus) while
+     hiding its scrollbar; used by the horizontally scrolling mobile nav. */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 320ms;
+  }
+}
+
+:root:not(.dark) .aurora-layer {
+  opacity: 0.55;
+}
+
+@keyframes aurora-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
+}
+@keyframes aurora-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(-7vw, 5vh, 0) scale(0.92); }
+}
+@keyframes aurora-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50%      { transform: translate3d(4vw, -6vh, 0) scale(1.15); }
 }

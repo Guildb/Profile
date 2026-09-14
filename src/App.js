@@ -1,35 +1,37 @@
-import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React from 'react';
+import * as motionReact from 'motion/react';
+import Header from './components/Header';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import BackToTopButton from './components/BackToTopButton';
 import ThemeToggleButton from './components/ThemeToggleButton';
 import Footer from './components/Footer';
+import ScrollRail from './components/ui/ScrollRail';
+import Grain from './components/ui/Grain';
 import { ThemeProvider } from './contexts/ThemeContext';
 
+const { MotionConfig } = motionReact;
 
-const App = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800, // Duration of the animation in milliseconds
-      easing: 'ease-out-cubic',
-      once: true, // Only animate elements the first time they scroll into view
-      offset: 60,
-    });
-  }, []);
+// hero + the six sections rendered by Profile.js.
+const SECTION_COUNT = 7;
 
-  return (
+// "user" mode makes every Framer Motion animation in the tree (including
+// layoutId crossfades and whileHover springs that have no manual
+// usePrefersReducedMotion guard, e.g. the nav indicator and the Interests
+// icon wobble) respect the OS reduced-motion setting automatically.
+const App = () => (
+  <MotionConfig reducedMotion="user">
     <ThemeProvider>
-      <div>
-        <LandingPage />
-        <Profile />
-        <BackToTopButton />
-        <ThemeToggleButton />
-        <Footer />
-      </div>
+      <Header />
+      <LandingPage />
+      <Profile />
+      <Footer />
+      <Grain />
+      <ScrollRail sectionCount={SECTION_COUNT} />
+      <BackToTopButton />
+      <ThemeToggleButton />
     </ThemeProvider>
-  );
-};
+  </MotionConfig>
+);
 
 export default App;
