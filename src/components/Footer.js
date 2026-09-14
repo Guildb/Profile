@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 py-10">
         <div className="text-center md:text-left mb-6 md:mb-0">
           <h2 className="font-display text-2xl font-bold mb-1">
-            Renato <span className="gradient-text">Cardoso</span>
+            Renato <span className="text-accent">Cardoso</span>
           </h2>
           <p className="text-sm text-muted">
             Web Support Engineer at ICAAL · Software Engineer

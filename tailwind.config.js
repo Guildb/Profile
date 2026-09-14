@@ -27,6 +27,18 @@ module.exports = {
         hero: ['clamp(2.75rem, 11vw, 8.5rem)', { lineHeight: '0.92', letterSpacing: '-0.04em' }],
         section: ['clamp(1.85rem, 4.5vw, 3.25rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
       },
+      // Scroll cue. Exponential ease-out rather than Tailwind's bounce, and
+      // applied via `motion-safe:` so it stops for reduced-motion users — a
+      // plain CSS keyframe is not reached by MotionConfig.
+      animation: {
+        nudge: 'nudge 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite',
+      },
+      keyframes: {
+        nudge: {
+          '0%, 100%': { transform: 'translateY(0)', opacity: '0.6' },
+          '50%': { transform: 'translateY(6px)', opacity: '1' },
+        },
+      },
     },
   },
   plugins: [],

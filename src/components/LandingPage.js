@@ -192,7 +192,7 @@ const LandingPage = () => {
           aria-label="Scroll to About"
           className="absolute bottom-6 hidden cursor-pointer sm:block"
         >
-          <FaChevronDown className="h-6 w-6 animate-bounce text-ink/80" />
+          <FaChevronDown className="h-6 w-6 text-ink/80 motion-safe:animate-nudge" />
         </a>
       </div>
     </section>
