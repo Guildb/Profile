@@ -29,16 +29,19 @@ const Experience = () => {
         {/* Track: the dim base line the fill draws over. */}
         <div
           aria-hidden="true"
-          className={`absolute top-0 h-full w-0.5 -translate-x-1/2 bg-hairline/40 ${TRACK_POSITION}`}
+          className={`absolute top-0 h-full w-0.5 -translate-x-1/2 bg-hairline ${TRACK_POSITION}`}
         />
-        {/* Fill: scaleY tracks scroll progress through the section, never height. */}
+        {/* Fill: scaleY tracks scroll progress through the section, never height.
+            The x offset is set via the motion style (not a Tailwind translate
+            class) because motion's inline transform would otherwise overwrite
+            the class-based translate and knock the fill off its track. */}
         <motion.div
           aria-hidden="true"
-          className={`absolute top-0 h-full w-0.5 -translate-x-1/2 bg-gradient-to-b from-aurora1 to-aurora2 ${TRACK_POSITION}`}
+          className={`absolute top-0 h-full w-0.5 bg-gradient-to-b from-aurora1 to-aurora2 ${TRACK_POSITION}`}
           style={
             prefersReducedMotion
-              ? { scaleY: 1, transformOrigin: "top" }
-              : { scaleY: fillScale, transformOrigin: "top" }
+              ? { x: "-50%", scaleY: 1, transformOrigin: "top" }
+              : { x: "-50%", scaleY: fillScale, transformOrigin: "top" }
           }
         />
 
@@ -75,7 +78,7 @@ const Experience = () => {
                         </span>
                       )}
                     </div>
-                    <h4 className="text-md font-semibold text-muted">
+                    <h4 className="text-base font-semibold text-muted">
                       {experience.company
                         ? `${experience.company} · ${experience.location}`
                         : experience.location}
