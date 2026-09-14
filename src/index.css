@@ -68,8 +68,13 @@
 }
 
 @layer components {
+  /* In light mode the gradient starts from aurora1 rather than aurora2:
+     teal-on-bone (aurora2 on canvas) measures 2.29:1, failing even large
+     text; starting from the darker aurora1 keeps every stop at 4.71:1 or
+     better. Dark mode keeps aurora2 - canvas is near-black there, so both
+     aurora2 and accent already clear 4.5:1 by a wide margin. */
   .gradient-text {
-    @apply bg-gradient-to-r from-aurora2 to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-aurora1 to-accent bg-clip-text text-transparent dark:from-aurora2;
   }
 
   .field-input:user-invalid {

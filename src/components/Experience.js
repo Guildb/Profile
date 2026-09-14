@@ -67,7 +67,10 @@ const Experience = () => {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="font-display text-xl font-bold">{experience.title}</h3>
                       {experience.current && (
-                        <span className="rounded-full bg-gradient-to-r from-aurora1 to-aurora2 px-3 py-0.5 text-xs font-semibold text-white">
+                        // to-[250%]: see LandingPage.js's "Get in touch"
+                        // button for why the aurora2 stop is pushed past the
+                        // visible edge (white text on flat aurora2 is 2.58:1).
+                        <span className="rounded-full bg-gradient-to-r from-aurora1 to-aurora2 to-[250%] px-3 py-0.5 text-xs font-semibold text-white">
                           Present
                         </span>
                       )}

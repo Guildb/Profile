@@ -152,7 +152,11 @@ const LandingPage = () => {
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#contact-info"
-              className="flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-aurora1 to-aurora2 px-6 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-105"
+              // to-[250%] pushes the aurora2 stop past the visible edge so the
+              // pill only ever shows the first ~40% of the blend (min 5.16:1
+              // white-on-teal at that point) — full aurora2 (#0FB5A0) drops
+              // white text to 2.58:1, below the 4.5:1 AA floor.
+              className="flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-aurora1 to-aurora2 to-[250%] px-6 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-105"
             >
               <FaPaperPlane className="h-4 w-4" />
               Get in touch
