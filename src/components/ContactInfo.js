@@ -1,32 +1,85 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import SectionHeading from "./SectionHeading";
+import Reveal from "./ui/Reveal";
+import GlassPanel from "./ui/GlassPanel";
+
+const FIELD_ERRORS = {
+  name: "Please enter your name.",
+  email: "Please enter a valid email address.",
+  message: "Please enter a message.",
+};
+
+// `:user-invalid` (Baseline widely available) drives the visible styling in
+// index.css, but it carries no ARIA semantics of its own. jsdom's selector
+// engine doesn't recognise it either, so this falls back to `:invalid` there
+// (and in any browser old enough not to support it) rather than throwing.
+const matchesInvalid = (input) => {
+  try {
+    return input.matches(":user-invalid");
+  } catch {
+    return input.matches(":invalid");
+  }
+};
+
+const ErrorIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-4 w-4 shrink-0"
+    fill="none"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    {...props}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      stroke="currentColor"
+      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
 
 const ContactInfo = () => {
   const inputClass =
-    "w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-sm text-ink placeholder-muted outline-none transition duration-300 focus:border-accent focus:ring-2 focus:ring-accent/50";
+    "field-input w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-sm text-ink placeholder-muted outline-none transition duration-300 focus:border-accent focus:ring-2 focus:ring-accent/50";
+
+  const formRef = useRef(null);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: null,
+    phone: "",
     message: "",
   });
 
-  const [showNotification, setShowNotification] = useState(false);
-  const [notificationType, setNotificationType] = useState(null);
-  const [notificationMessage, setNotificationMessage] = useState("");
+  // Replaces the previous trio of notification useStates: 'idle' | 'sending' | 'sent' | 'error'.
+  const [status, setStatus] = useState("idle");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((previous) => ({
+      ...previous,
       [name]: value,
-    });
+    }));
+
+    // Clears a stale invalid flag as soon as the field becomes valid again,
+    // without waiting for the next blur.
+    const input = e.target;
+    if (input.checkValidity() && !matchesInvalid(input)) {
+      input.setAttribute("aria-invalid", "false");
+    }
+  };
+
+  const syncAriaInvalid = (e) => {
+    const input = e.target;
+    input.setAttribute("aria-invalid", matchesInvalid(input) ? "true" : "false");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus("sending");
 
     const templateParams = {
       from_name: formData.name,
@@ -37,150 +90,119 @@ const ContactInfo = () => {
     };
 
     emailjs
-      .send(
-        "service_bkaj0bm",
-        "template_j2j5l3s",
-        templateParams,
-        "9lfsIIL0iH2_xrsfG"
-      )
-      .then((response) => {
-        console.log("SUCCESS!", response.status, response.text);
-        setNotificationType("success");
-        setNotificationMessage("Message sent successfully!");
-        setShowNotification(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+      .send("service_bkaj0bm", "template_j2j5l3s", templateParams, "9lfsIIL0iH2_xrsfG")
+      .then(() => {
+        // A plain state reset empties the inputs but leaves the browser's
+        // per-field "user has interacted" flag set, so a required field left
+        // blank would still render :user-invalid next to the success
+        // message. The native form reset clears that flag along with the
+        // values; the state reset keeps React's controlled inputs in sync.
+        formRef.current?.reset();
+        formRef.current
+          ?.querySelectorAll("[aria-invalid]")
+          .forEach((field) => field.setAttribute("aria-invalid", "false"));
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setStatus("sent");
       })
-      .catch((err) => {
-        console.log("FAILED...", err);
-        setNotificationType("error");
-        setNotificationMessage(
-          "Failed to send message. Please try again later."
-        );
-        setShowNotification(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+      .catch(() => {
+        setStatus("error");
       });
   };
+
+  const renderField = ({ id, label, type, required = true }) => (
+    <div className="mb-4">
+      <label className="block text-sm font-bold mb-2" htmlFor={id}>
+        {label}
+      </label>
+      {type === "textarea" ? (
+        <textarea
+          id={id}
+          name={id}
+          value={formData[id]}
+          onChange={handleChange}
+          onBlur={syncAriaInvalid}
+          className={inputClass}
+          rows="5"
+          required={required}
+          aria-errormessage={`${id}-error`}
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          name={id}
+          value={formData[id]}
+          onChange={handleChange}
+          onBlur={syncAriaInvalid}
+          className={inputClass}
+          required={required}
+          aria-errormessage={`${id}-error`}
+        />
+      )}
+      {FIELD_ERRORS[id] && (
+        <p id={`${id}-error`} className="field-error mt-2 items-center gap-1.5 text-sm text-accent">
+          <ErrorIcon />
+          <span>{FIELD_ERRORS[id]}</span>
+        </p>
+      )}
+    </div>
+  );
 
   return (
     <div className="py-12 px-4">
       <SectionHeading id="contact-info-heading" eyebrow="Get in touch" title="Contact Me" />
-      <div className="max-w-xl mx-auto p-6 sm:p-8 shadow-lg rounded-2xl border border-hairline bg-surface">
-      {showNotification && (
-        <div className="p-4">
-          <div
-            className={`flex bg-white dark:bg-gray-900 items-center px-6 py-4 text-sm border-t-2 rounded-b shadow-sm ${
-              notificationType === "success"
-                ? "border-green-500"
-                : "border-red-500"
-            }`}
-          >
-            {notificationType === "success" ? (
+      <Reveal as="div" className="mx-auto max-w-xl">
+        <GlassPanel className="p-6 text-ink sm:p-8">
+          {status === "sent" && (
+            <div role="status" className="mb-6 flex items-start gap-3 rounded-xl border border-hairline bg-canvas px-5 py-4 text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-8 h-8 text-green-500 stroke-current"
+                className="h-6 w-6 shrink-0 text-aurora2"
                 fill="none"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  stroke="currentColor"
                   d="M5 13l4 4L19 7"
-                ></path>
+                />
               </svg>
-            ) : (
-              <svg
-                viewBox="0 0 24 24"
-                className="w-8 h-8 text-red-500 stroke-current"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 8V12V8ZM12 16H12.01H12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            )}
-            <div className="ml-3">
-              <div className="font-bold text-left text-black dark:text-gray-50">
-                {notificationMessage}
-              </div>
+              <p className="font-semibold text-ink">Message sent — thanks for reaching out!</p>
             </div>
-          </div>
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="name">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className={inputClass}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={inputClass}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="phone">
-            Phone Number (Optional)
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className={inputClass}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="message">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            className={inputClass}
-            rows="5"
-            required
-          ></textarea>
-        </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:opacity-90 focus:outline-none"
-          >
-            Send Message
-          </button>
-        </div>
-      </form>
-      </div>
+          )}
+          {status === "error" && (
+            <div role="alert" className="mb-6 flex items-start gap-3 rounded-xl border border-hairline bg-canvas px-5 py-4 text-sm">
+              <ErrorIcon className="h-6 w-6 shrink-0 text-accent" />
+              <p className="font-semibold text-ink">
+                Failed to send message. Please try again later.
+              </p>
+            </div>
+          )}
+          <form ref={formRef} onSubmit={handleSubmit}>
+            {renderField({ id: "name", label: "Name", type: "text" })}
+            {renderField({ id: "email", label: "Email", type: "email" })}
+            {renderField({
+              id: "phone",
+              label: "Phone Number (Optional)",
+              type: "tel",
+              required: false,
+            })}
+            {renderField({ id: "message", label: "Message", type: "textarea" })}
+            <div className="text-center">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:opacity-90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+              >
+                {status === "sending" ? "Sending…" : "Send Message"}
+              </button>
+            </div>
+          </form>
+        </GlassPanel>
+      </Reveal>
     </div>
   );
 };
