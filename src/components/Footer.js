@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-canvas text-ink">
+    <footer className="relative z-10 bg-canvas text-ink">
       <div className="h-1 w-full bg-gradient-to-r from-aurora1 to-aurora2" />
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 py-10">
         <div className="text-center md:text-left mb-6 md:mb-0">

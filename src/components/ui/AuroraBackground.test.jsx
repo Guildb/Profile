@@ -23,3 +23,13 @@ test('does not capture pointer events', () => {
   const { container } = render(<AuroraBackground />);
   expect(container.firstChild.className).toMatch(/pointer-events-none/);
 });
+
+test('applies exactly one position utility', () => {
+  const { container: scrolling } = render(<AuroraBackground />);
+  expect(scrolling.firstChild).toHaveClass('absolute');
+  expect(scrolling.firstChild).not.toHaveClass('fixed');
+
+  const { container: pinned } = render(<AuroraBackground fixed />);
+  expect(pinned.firstChild).toHaveClass('fixed');
+  expect(pinned.firstChild).not.toHaveClass('absolute');
+});

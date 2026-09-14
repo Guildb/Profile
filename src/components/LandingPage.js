@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import * as motionReact from "motion/react";
-import Header from "./Header";
 import AuroraBackground from "./ui/AuroraBackground";
 import Spotlight, { useSpotlightTracking } from "./ui/Spotlight";
 import GlassPanel from "./ui/GlassPanel";
@@ -42,7 +41,10 @@ const LandingPage = () => {
       id="hero"
       ref={sectionRef}
       onPointerMove={prefersReduced ? undefined : handlePointerMove}
-      className="relative min-h-screen overflow-hidden bg-canvas"
+      // Its own stacking context above the Profile shell: the shell aurora is
+      // viewport-fixed and later in the DOM, so without z-10 it would paint
+      // over this (opaque) section and double the hero's own aurora.
+      className="relative isolate z-10 min-h-screen overflow-hidden bg-canvas"
     >
       {/* z-1 layer: a textured photo sitting beneath the aurora, not a
           full-bleed wash. Kept at low opacity so the aurora reads as the
@@ -97,8 +99,6 @@ const LandingPage = () => {
 
       {/* z1: the pointer-tracked dot grid aperture. */}
       <Spotlight className="z-[2]" rawX={rawX} rawY={rawY} />
-
-      <Header />
 
       {/* z2: content, in a glass panel with a gradient hairline border. */}
       <div className="relative z-[3] flex min-h-screen flex-col items-center justify-center px-4 py-24 text-center text-ink">
