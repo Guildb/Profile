@@ -22,8 +22,15 @@ const Skills = () => {
             key={group.title}
             as={motion.div}
             variants={revealUp}
-            className={`group relative p-6 text-left text-ink transition-shadow duration-300 hover:shadow-[0_0_40px_-8px_rgb(var(--accent)/0.35)] ${spans[index]}`}
+            className={`group relative p-6 text-left text-ink ${spans[index]}`}
           >
+            {/* Hover glow: a static shadow on its own layer, faded in by
+                opacity. Transitioning box-shadow on the panel itself would
+                repaint its backdrop-filtered glass every frame. */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-3xl opacity-0 shadow-[0_0_40px_-8px_rgb(var(--accent)/0.35)] transition-opacity duration-300 group-hover:opacity-100"
+            />
             <h3 className="font-display text-2xl font-semibold">{group.title}</h3>
             <span
               aria-hidden="true"

@@ -175,7 +175,7 @@ const LandingPage = () => {
                 rel={download ? undefined : "noopener noreferrer"}
                 aria-label={label}
                 title={label}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-hairline bg-surface shadow-md transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-hairline bg-surface shadow-md transition-transform duration-300 hover:-translate-y-1 hover:text-accent"
               >
                 <Icon className="h-5 w-5" />
               </a>

@@ -2,7 +2,15 @@ import React from 'react';
 import * as motionReact from 'motion/react';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 
-const { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } = motionReact;
+const { motion, useMotionValue, useSpring, useTransform } = motionReact;
+
+// The specular highlight is a fixed-size blob with a static gradient, moved
+// by transform. Rewriting a background-image per pointer frame would repaint
+// the whole card, including its backdrop-filtered glass, on every move.
+// 550px across fading to transparent at its edge matches the earlier
+// "500px circle ... transparent 55%" falloff.
+const GLARE = 'radial-gradient(circle closest-side, rgb(var(--ink) / 0.16), transparent)';
+const GLARE_SIZE = 550;
 
 const TiltCard = ({ className = '', maxTilt = 9, children }) => {
   const prefersReduced = usePrefersReducedMotion();
@@ -10,8 +18,9 @@ const TiltCard = ({ className = '', maxTilt = 9, children }) => {
   // Normalised pointer position within the card, -0.5 .. 0.5
   const px = useMotionValue(0);
   const py = useMotionValue(0);
-  const glareX = useMotionValue(50);
-  const glareY = useMotionValue(50);
+  // Glare offset in px from the card's centre
+  const glareX = useMotionValue(0);
+  const glareY = useMotionValue(0);
 
   const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [maxTilt, -maxTilt]), {
     stiffness: 260,
@@ -22,23 +31,21 @@ const TiltCard = ({ className = '', maxTilt = 9, children }) => {
     damping: 24,
   });
 
-  const glare = useMotionTemplate`radial-gradient(500px circle at ${glareX}% ${glareY}%, rgb(var(--ink) / 0.16), transparent 55%)`;
-
   const handlePointerMove = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect();
-    const relX = (event.clientX - bounds.left) / bounds.width;
-    const relY = (event.clientY - bounds.top) / bounds.height;
-    px.set(relX - 0.5);
-    py.set(relY - 0.5);
-    glareX.set(relX * 100);
-    glareY.set(relY * 100);
+    const relX = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const relY = (event.clientY - bounds.top) / bounds.height - 0.5;
+    px.set(relX);
+    py.set(relY);
+    glareX.set(relX * bounds.width);
+    glareY.set(relY * bounds.height);
   };
 
   const handlePointerLeave = () => {
     px.set(0);
     py.set(0);
-    glareX.set(50);
-    glareY.set(50);
+    glareX.set(0);
+    glareY.set(0);
   };
 
   if (prefersReduced) {
@@ -56,11 +63,23 @@ const TiltCard = ({ className = '', maxTilt = 9, children }) => {
       className={`relative ${className}`}
     >
       {children}
-      <motion.span
+      <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 rounded-3xl"
-        style={{ backgroundImage: glare }}
-      />
+        className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+      >
+        <motion.span
+          className="absolute left-1/2 top-1/2 block rounded-full will-change-transform"
+          style={{
+            width: GLARE_SIZE,
+            height: GLARE_SIZE,
+            marginLeft: -GLARE_SIZE / 2,
+            marginTop: -GLARE_SIZE / 2,
+            x: glareX,
+            y: glareY,
+            backgroundImage: GLARE,
+          }}
+        />
+      </span>
     </motion.div>
   );
 };

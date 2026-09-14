@@ -20,7 +20,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-transform duration-300 hover:-translate-y-1 hover:text-accent"
           >
             <FaGithub className="text-xl" />
           </a>
@@ -29,14 +29,14 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-transform duration-300 hover:-translate-y-1 hover:text-accent"
           >
             <FaLinkedin className="text-xl" />
           </a>
           <a
             href="mailto:renatoscardoso@outlook.com"
             aria-label="Email"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-surface transition-transform duration-300 hover:-translate-y-1 hover:text-accent"
           >
             <FaEnvelope className="text-xl" />
           </a>

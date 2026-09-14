@@ -43,7 +43,7 @@ const ErrorIcon = (props) => (
 
 const ContactInfo = () => {
   const inputClass =
-    "field-input w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-sm text-ink placeholder-muted outline-none transition duration-300 focus:border-accent focus:ring-2 focus:ring-accent/50";
+    "field-input w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-sm text-ink placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/50";
 
   const formRef = useRef(null);
 
@@ -195,7 +195,7 @@ const ContactInfo = () => {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:opacity-90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+                className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-[1.02] focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
               >
                 {status === "sending" ? "Sending…" : "Send Message"}
               </button>
