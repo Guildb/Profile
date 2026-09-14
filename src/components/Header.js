@@ -55,10 +55,14 @@ const Header = () => {
                 className="relative shrink-0 cursor-pointer whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-ink hover:text-accent focus-visible:outline-offset-[-2px]"
               >
                 {isActive && (
+                  // Transparency lives in the colour stops, not an opacity
+                  // class: layoutId's crossfade writes an inline opacity: 1
+                  // that would override one, leaving ink text on the solid
+                  // teal gradient.
                   <motion.span
                     layoutId="nav-indicator"
                     transition={springs.snappy}
-                    className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-aurora1 to-aurora2 opacity-20"
+                    className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-aurora1/20 to-aurora2/20"
                   />
                 )}
                 {label}
