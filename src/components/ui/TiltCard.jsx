@@ -49,7 +49,10 @@ const TiltCard = ({ className = '', maxTilt = 9, children }) => {
     <motion.div
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 1000 }}
+      // transformPerspective folds perspective() into this element's own
+      // transform. The CSS perspective property only affects children, so
+      // it left the card's rotation flat, with no foreshortening.
+      style={{ rotateX, rotateY, transformPerspective: 1000, transformStyle: 'preserve-3d' }}
       className={`relative ${className}`}
     >
       {children}

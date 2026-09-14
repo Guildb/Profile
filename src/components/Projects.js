@@ -62,7 +62,7 @@ const ProjectCard = ({ project, meta, status }) => {
   const recency = enriched?.updatedAt ? formatRecency(enriched.updatedAt) : null;
 
   return (
-    <TiltCard maxTilt={9} className="w-full rounded-3xl lg:w-2/3">
+    <TiltCard maxTilt={9} className="w-full rounded-3xl">
       <GlassPanel className="overflow-hidden">
         <div className="h-1.5 w-full bg-gradient-to-r from-aurora1 to-aurora2" />
         <div className="p-6 text-left sm:p-8">
