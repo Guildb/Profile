@@ -64,6 +64,13 @@ const ContactInfo = () => {
       [name]: value,
     }));
 
+    // Editing a field after a failed or completed send means the user is
+    // trying again; drop the stale alert/success banner rather than leaving
+    // it stuck on screen while they retype.
+    if (status === "error" || status === "sent") {
+      setStatus("idle");
+    }
+
     // Clears a stale invalid flag as soon as the field becomes valid again,
     // without waiting for the next blur.
     const input = e.target;
@@ -153,26 +160,42 @@ const ContactInfo = () => {
       <SectionHeading id="contact-info-heading" eyebrow="Get in touch" title="Contact Me" />
       <Reveal as="div" className="mx-auto max-w-xl">
         <GlassPanel className="p-6 text-ink sm:p-8">
-          {status === "sent" && (
-            <div role="status" className="mb-6 flex items-start gap-3 rounded-xl border border-hairline bg-canvas px-5 py-4 text-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0 text-aurora2"
-                fill="none"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <p className="font-semibold text-ink">Message sent — thanks for reaching out!</p>
-            </div>
-          )}
+          {/* Always mounted (rather than appearing only once status is
+              "sent") so its text change is a live-region UPDATE, not initial
+              content arriving already filled in — screen readers commonly
+              skip a live region that mounts pre-filled, which would silently
+              drop both the "sending" and "sent" announcements. */}
+          <div
+            role="status"
+            aria-live="polite"
+            className={
+              status === "sent"
+                ? "mb-6 flex items-start gap-3 rounded-xl border border-hairline bg-canvas px-5 py-4 text-sm"
+                : "sr-only"
+            }
+          >
+            {status === "sending" && "Sending your message…"}
+            {status === "sent" && (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 text-aurora2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <p className="font-semibold text-ink">Message sent — thanks for reaching out!</p>
+              </>
+            )}
+          </div>
           {status === "error" && (
             <div role="alert" className="mb-6 flex items-start gap-3 rounded-xl border border-hairline bg-canvas px-5 py-4 text-sm">
               <ErrorIcon className="h-6 w-6 shrink-0 text-accent" />
@@ -195,7 +218,9 @@ const ContactInfo = () => {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 px-4 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-[1.02] focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+                // to-[250%]: see LandingPage.js's "Get in touch" button for
+                // why the aurora2 stop is pushed past the visible edge.
+                className="w-full rounded-xl bg-gradient-to-r from-aurora1 to-aurora2 to-[250%] px-4 py-3 font-semibold text-white shadow-lg transition-transform duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
               >
                 {status === "sending" ? "Sending…" : "Send Message"}
               </button>

@@ -58,5 +58,23 @@ test('disables the submit button only while a request is in flight', async () =>
   await waitFor(() => expect(button).toBeDisabled());
 
   resolveSend({ status: 200 });
-  await waitFor(() => expect(screen.getByRole('status')).toBeInTheDocument());
+  // The status region is always mounted (so its text updates read as live
+  // region changes, not pre-filled content), so presence alone would pass
+  // before the send even resolves. Assert its content instead.
+  await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(/sent/i));
+});
+
+test('returns to idle and hides the error alert once the user edits a field', async () => {
+  emailjs.send.mockRejectedValue(new Error('nope'));
+  const user = userEvent.setup();
+  render(<ContactInfo />);
+
+  await fillForm(user);
+  await user.click(screen.getByRole('button', { name: /send message/i }));
+
+  await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument());
+
+  await user.type(screen.getByLabelText(/name/i), ' Lovelace');
+
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
