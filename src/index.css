@@ -19,12 +19,12 @@
   :root:not(.dark) {
     --canvas: 244 241 236;
     --surface: 255 255 255;
-    --surface-alpha: 0.70;
+    --surface-alpha: 0.55;
     --hairline: 11 18 32;
-    --hairline-alpha: 0.10;
-    --accent: 196 82 44;
+    --hairline-alpha: 0.18;
+    --accent: 179 75 40;
     --ink: 11 18 32;
-    --muted: 90 100 120;
+    --muted: 79 89 108;
   }
 
   html {
@@ -82,23 +82,21 @@
     display: none;
   }
 
-  /* Lets components pick a theme-specific background image (a photo, a
-     pattern) purely through CSS, without reading theme state in JS. The
-     component sets --bg-image-light/--bg-image-dark inline (each a
-     PUBLIC_URL-prefixed url()); this rule + the .dark override below pick
-     the right one from the current --bg-image-* variables set on the same
-     element. */
-  .bg-theme-image {
-    background-image: var(--bg-image-light);
+  .deferred-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto none auto 900px;
   }
+}
 
-  .dark .bg-theme-image {
-    background-image: var(--bg-image-dark);
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 320ms;
   }
 }
 
 :root:not(.dark) .aurora-layer {
-  opacity: 0.35;
+  opacity: 0.55;
 }
 
 @keyframes aurora-drift-a {

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import LandingPage from './LandingPage';
+import { ThemeProvider } from '../contexts/ThemeContext';
 
 beforeEach(() => {
   window.matchMedia = jest.fn().mockReturnValue({
@@ -14,15 +15,19 @@ beforeEach(() => {
   // pass vacuously.
 });
 
+// LandingPage reads the site theme (to pick the matching hero photo), so it
+// must render inside the same ThemeProvider App.js supplies.
+const renderLandingPage = () => render(<LandingPage />, { wrapper: ThemeProvider });
+
 test('renders the name as the page heading', () => {
-  render(<LandingPage />);
+  renderLandingPage();
   expect(
     screen.getByRole('heading', { level: 1, name: /renato cardoso/i })
   ).toBeInTheDocument();
 });
 
 test('offers the CV download and both social links', () => {
-  render(<LandingPage />);
+  renderLandingPage();
   expect(screen.getByLabelText(/download cv/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/github/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/linkedin/i)).toBeInTheDocument();

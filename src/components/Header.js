@@ -20,9 +20,9 @@ const Header = () => {
   const activeId = useActiveSection(sectionIds);
 
   return (
-    <header className="fixed top-0 left-0 z-40 w-full py-4">
+    <header className="fixed top-0 left-0 z-40 w-full py-4 pr-16 sm:pr-0">
       <nav className="container mx-auto flex justify-center px-4">
-        <div className="flex flex-wrap justify-center gap-1 rounded-full border border-hairline bg-surface px-2 py-1 text-ink shadow-lg backdrop-blur-md">
+        <div className="flex flex-wrap justify-center gap-1 rounded-full border border-hairline bg-surface px-2 py-1 text-ink shadow-lg backdrop-blur-md dark:bg-canvas/70 dark:shadow-black/40">
           {navItems.map(({ to, label }) => {
             const isActive = activeId === to;
             return (
@@ -30,7 +30,7 @@ const Header = () => {
                 key={to}
                 href={`#${to}`}
                 aria-current={isActive ? 'true' : undefined}
-                className="relative cursor-pointer whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-ink transition-colors duration-300 hover:text-accent"
+                className="relative shrink-0 cursor-pointer whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-ink transition-colors duration-300 hover:text-accent"
               >
                 {isActive && (
                   <motion.span

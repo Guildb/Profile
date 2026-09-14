@@ -6,6 +6,7 @@ import Spotlight, { useSpotlightTracking } from "./ui/Spotlight";
 import GlassPanel from "./ui/GlassPanel";
 import { springs, revealStagger, revealUp } from "../lib/motion";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
+import { useTheme } from "../contexts/ThemeContext";
 import { FaChevronDown, FaPaperPlane } from "react-icons/fa";
 import { profile, socials } from "../data/profile";
 
@@ -15,6 +16,7 @@ const nameWords = profile.name.split(" ");
 
 const LandingPage = () => {
   const prefersReduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
   const sectionRef = useRef(null);
   const rawX = useMotionValue(-500);
   const rawY = useMotionValue(-500);
@@ -45,30 +47,49 @@ const LandingPage = () => {
       {/* z-1 layer: a textured photo sitting beneath the aurora, not a
           full-bleed wash. Kept at low opacity so the aurora reads as the
           dominant surface. This is the LCP candidate: eager, high priority,
-          never lazy-loaded. */}
+          never lazy-loaded.
+
+          The photo follows the site's theme toggle, not the OS
+          prefers-color-scheme setting: keying the <picture> on `theme`
+          swaps which <img> React renders, so only the active theme's photo
+          is ever requested (matching the single-download goal the earlier
+          `media="(prefers-color-scheme: dark)"` source attempted, but
+          tracking the actual site theme instead of the OS setting). */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
       >
-        <picture>
-          <source
-            srcSet={`${process.env.PUBLIC_URL}/dark-background.webp`}
-            type="image/webp"
-            media="(prefers-color-scheme: dark)"
-          />
-          <source
-            srcSet={`${process.env.PUBLIC_URL}/light-background.webp`}
-            type="image/webp"
-          />
-          <img
-            src={`${process.env.PUBLIC_URL}/dark-background.jpg`}
-            alt=""
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-            className="h-full w-full object-cover opacity-20"
-          />
-        </picture>
+        {theme === "dark" ? (
+          <picture key="dark">
+            <source
+              srcSet={`${process.env.PUBLIC_URL}/dark-background.webp`}
+              type="image/webp"
+            />
+            <img
+              src={`${process.env.PUBLIC_URL}/dark-background.jpg`}
+              alt=""
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover opacity-20"
+            />
+          </picture>
+        ) : (
+          <picture key="light">
+            <source
+              srcSet={`${process.env.PUBLIC_URL}/light-background.webp`}
+              type="image/webp"
+            />
+            <img
+              src={`${process.env.PUBLIC_URL}/light-background.jpg`}
+              alt=""
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover opacity-[0.08]"
+            />
+          </picture>
+        )}
       </div>
 
       {/* z0: the animated aurora mesh, above the photo. */}
