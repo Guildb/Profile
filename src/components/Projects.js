@@ -52,7 +52,6 @@ const LanguageBar = ({ languages }) => {
           />
         ))}
       </div>
-      <p className="sr-only">{summary}</p>
     </div>
   );
 };

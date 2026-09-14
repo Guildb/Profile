@@ -13,7 +13,7 @@ const Bio = () => {
   return (
     <div className="text-center py-12 px-4">
       <SectionHeading id="about-heading" eyebrow="Who I am" title="About Me" />
-      <Reveal as="p" className="text-lg mt-2 max-w-3xl mx-auto text-muted">
+      <Reveal as="p" className="text-lg mt-2 max-w-3xl mx-auto text-left text-muted">
         I'm a Portuguese software engineer based in the UK, currently working
         as a Web Support Engineer at ICAAL. After graduating with a
         first-class honours degree in Software Engineering, I now spend my
@@ -41,7 +41,7 @@ const Bio = () => {
         </div>
       </div>
       <Reveal>
-        <GlassPanel className="p-8 text-lg text-pretty max-w-4xl mx-auto text-ink">
+        <GlassPanel className="p-8 text-lg text-pretty max-w-4xl mx-auto text-left text-ink">
           <p>
             I have vast experience with full-stack development and a solid
             skill-set in both front and back-end development, that empowers me to

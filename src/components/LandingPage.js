@@ -163,7 +163,7 @@ const LandingPage = () => {
             </a>
             <a
               href="#projects"
-              className="cursor-pointer rounded-full border border-hairline px-6 py-3 font-semibold transition-transform duration-300 hover:scale-105 hover:bg-white/70 dark:hover:bg-white/10"
+              className="cursor-pointer rounded-full border border-hairline px-6 py-3 font-semibold transition-transform duration-300 hover:scale-105 hover:bg-surface dark:hover:bg-white/10"
             >
               View my work
             </a>

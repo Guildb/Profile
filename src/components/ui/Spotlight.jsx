@@ -42,7 +42,6 @@ const Spotlight = ({ className = '', rawX: externalRawX, rawY: externalRawY }) =
     <div
       aria-hidden="true"
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
-      onPointerMove={undefined}
     >
       <motion.div
         className="absolute left-0 top-0 h-[560px] w-[560px] overflow-hidden will-change-transform"

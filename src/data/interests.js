@@ -13,7 +13,6 @@ import {
 export const interestGroups = [
   {
     title: 'Hobbies',
-    aos: 'flip-left',
     items: [
       { icon: FaGamepad, label: 'Gaming' },
       { icon: FaTv, label: 'Netflix/Anime' },
@@ -23,7 +22,6 @@ export const interestGroups = [
   },
   {
     title: 'Likes',
-    aos: 'flip-right',
     items: [
       { icon: FaCampground, label: 'Love the Outdoor (Camping or go for a walk)' },
       { icon: FaFire, label: 'A good pit fire with friends' },
