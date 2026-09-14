@@ -61,3 +61,17 @@ test('serves a second render from sessionStorage without refetching', async () =
   await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('ready'));
   expect(fetchSpy.mock.calls.length).toBe(callsAfterFirst);
 });
+
+test('caches a failure so a reload within the TTL window does not refetch', async () => {
+  const fetchSpy = jest.spyOn(global, 'fetch').mockRejectedValue(new Error('offline'));
+
+  const { unmount } = render(<Probe slugs={['owner/repo']} />);
+  await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('failed'));
+  const callsAfterFirst = fetchSpy.mock.calls.length;
+  expect(callsAfterFirst).toBeGreaterThan(0);
+
+  unmount();
+  render(<Probe slugs={['owner/repo']} />);
+  await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('failed'));
+  expect(fetchSpy.mock.calls.length).toBe(callsAfterFirst);
+});
