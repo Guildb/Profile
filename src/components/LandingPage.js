@@ -143,10 +143,10 @@ const LandingPage = () => {
             {profile.role} · {profile.discipline}
           </p>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted sm:text-base">
-            Take a look around my page to see what I've been working on and
-            learn a bit more about me. If you want to connect or chat about
-            potential collaborations, don't hesitate to reach out. I'd love to
-            hear from you!
+            I build and look after client websites at ICAAL, a web agency in
+            Southampton, working mostly with WordPress and Laravel and
+            increasingly on SEO. Take a look around, and if you'd like to work
+            together, I'd love to hear from you.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
